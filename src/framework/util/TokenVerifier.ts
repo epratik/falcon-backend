@@ -2,11 +2,11 @@ import * as JWT from "jsonwebtoken"
 import jwtDecode from "jwt-decode";
 import jwkToPem, { RSA } from "jwk-to-pem"
 import { JwtHeader, JwtPayload } from "../../core/model/JWT";
-import { IHttpClientRequestParameters } from "../../core/interfaces/IHttpClientParameters";
+import { IHttpClientRequestParameters } from "../../core/interfaces/framework/IHttpClientParameters";
 import { injectable, inject } from "tsyringe";
-import { IHttpClient } from "../../core/interfaces/IHttpClient";
+import { IHttpClient } from "../../core/interfaces/framework/IHttpClient";
 import { JWK, JWKS } from "../../core/model/JWKS";
-import { ITokenVerifier } from "../../core/interfaces/ITokenVerifier";
+import { ITokenVerifier } from "../../core/interfaces/framework/ITokenVerifier";
 
 @injectable()
 export class TokenVerifier implements ITokenVerifier{

@@ -1,5 +1,5 @@
 import memcache from 'memory-cache'
-import { ICacheManager } from '../../core/interfaces/ICacheManager';
+import { ICacheManager } from '../../core/interfaces/framework/ICacheManager';
 
 export class CacheManager implements ICacheManager{
 

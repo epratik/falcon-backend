@@ -1,6 +1,6 @@
 import axios from "axios";
-import { IHttpClient } from "../../core/interfaces/IHttpClient";
-import { IHttpClientRequestParameters } from "../../core/interfaces/IHttpClientParameters";
+import { IHttpClient } from "../../core/interfaces/framework/IHttpClient";
+import { IHttpClientRequestParameters } from "../../core/interfaces/framework/IHttpClientParameters";
 
 export class AxiosHttpClient implements IHttpClient {
   constructor() { }

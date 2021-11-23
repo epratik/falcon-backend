@@ -2,8 +2,8 @@
 import express from "express";
 import { inject, injectable } from "tsyringe";
 // import { ErrorHandler } from "../../core/common/ErrorHandler";
-import { ILogger } from "../../core/interfaces/ILogger";
-import { ITokenVerifier } from "../../core/interfaces/ITokenVerifier";
+import { ILogger } from "../../core/interfaces/framework/ILogger";
+import { ITokenVerifier } from "../../core/interfaces/framework/ITokenVerifier";
 
 injectable();
 export class AuthorizationMiddleware {
