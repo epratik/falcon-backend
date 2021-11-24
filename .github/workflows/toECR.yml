@@ -2,7 +2,7 @@ on:
   push:
     branches: [ main ]
 
-name: Node Project `my-app` CI on ECR
+name: Push grepin-backend to ecr
 
 jobs:
   deploy:
