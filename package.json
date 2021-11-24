@@ -6,7 +6,9 @@
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"devstart": "set node_env=local&& ts-node ./src/server.ts",
-		"build": "tsc"
+		"build": "tsc",
+		"tsc": "tsc",
+		"start": "node dist/src/server.js"
 	},
 	"author": "",
 	"license": "ISC",
