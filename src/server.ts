@@ -16,6 +16,9 @@ import { AuthorizationMiddleware } from "./application/middleware/AuthorizationM
 import { Constants } from "./core/common/Constants";
 import { IRouter } from "./application/routes/IRouter";
 import { TestRouter } from "./application/routes/TestRouter";
+import { GetLinkPreviewUseCase } from "./core/useCases/GetLinkPreviewUseCase";
+import { PostRepository } from "./framework/repositories/PostRepository";
+import { GetTopContentUseCase } from "./core/useCases/GetTopContentUseCase";
 
 if (process.env.NODE_ENV === "local") {
 	//if run on local system use settings from .env file.
@@ -33,6 +36,10 @@ container.registerSingleton("IConfigManager", ConfigManager);
 //you can also use SQLHelperMock if you do not want to connect to the database.
 container.registerSingleton("ISQLHelper", SQLHelper);
 container.registerSingleton("ILogger", WinstonLogger);
+
+container.registerInstance("IGetLinkPreviewUseCase", GetLinkPreviewUseCase);
+container.registerInstance("IPostRepository", PostRepository);
+container.registerInstance("IGetTopContentUseCase", GetTopContentUseCase);
 
 //Factory and use case registories
 const tokenVerifier: TokenVerifier = container.resolve(TokenVerifier);
