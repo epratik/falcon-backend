@@ -24,6 +24,7 @@ console.log('printing node_env')
 console.log(process.env.NODE_ENV)
 
 if (process.env.NODE_ENV === "local") {
+	console.log('setting node env to dev')
 	//if run on local system use settings from .env file.
 	dotenv.config(); //This will use the local .env file.
 	process.env.NODE_ENV = "dev";
