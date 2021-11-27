@@ -20,6 +20,9 @@ import { PostRepository } from "./framework/repositories/PostRepository";
 import { GetTopContentUseCase } from "./core/useCases/GetTopContentUseCase";
 import { TestController } from "./application/controllers/TestController";
 
+console.log('printing node_env')
+console.log(process.env.NODE_ENV)
+
 if (process.env.NODE_ENV === "local") {
 	//if run on local system use settings from .env file.
 	dotenv.config(); //This will use the local .env file.
