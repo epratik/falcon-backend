@@ -1,5 +1,4 @@
 import express from "express";
-
 import { Request, Response } from "express";
 import http from "http";
 import "reflect-metadata";
@@ -19,6 +18,7 @@ import { TestRouter } from "./application/routes/TestRouter";
 import { GetLinkPreviewUseCase } from "./core/useCases/GetLinkPreviewUseCase";
 import { PostRepository } from "./framework/repositories/PostRepository";
 import { GetTopContentUseCase } from "./core/useCases/GetTopContentUseCase";
+import { TestController } from "./application/controllers/TestController";
 
 if (process.env.NODE_ENV === "local") {
 	//if run on local system use settings from .env file.
@@ -37,9 +37,12 @@ container.registerSingleton("IConfigManager", ConfigManager);
 container.registerSingleton("ISQLHelper", SQLHelper);
 container.registerSingleton("ILogger", WinstonLogger);
 
-container.registerInstance("IGetLinkPreviewUseCase", GetLinkPreviewUseCase);
 container.registerInstance("IPostRepository", PostRepository);
-container.registerInstance("IGetTopContentUseCase", GetTopContentUseCase);
+
+container.register("TestController", TestController);
+
+container.register("IGetLinkPreviewUseCase", GetLinkPreviewUseCase);
+container.register("IGetTopContentUseCase", GetTopContentUseCase);
 
 //Factory and use case registories
 const tokenVerifier: TokenVerifier = container.resolve(TokenVerifier);

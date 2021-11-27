@@ -1,7 +1,7 @@
 export abstract class Constants {
     static devEnviroment = "development";
     static prodEnviroment = "production";
-    static projectName = "cstl";
+    static projectName = "gp";
     static serviceConfigName = "serviceConfig";
     static separator = "/";
     static region = "app.region";

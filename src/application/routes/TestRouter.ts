@@ -10,7 +10,7 @@ export class TestRouter implements IRouter  {
     }
 
     initializeRoutes(){
-        this.router.post('/Search', (req, res) => container.resolve(TestController).test(req, res));
+        this.router.get('/test', (req, res) => container.resolve(TestController).test(req, res));
     }
 
 }
