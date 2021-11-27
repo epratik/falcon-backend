@@ -22,22 +22,22 @@ export class AuthorizationMiddleware {
 	authorize = async (request: express.Request, response: express.Response, next: express.NextFunction) => {
 		let isAuthorized: boolean = false;
 
-        if (request.path === "/api")
+        // if (request.path === "/api")
             isAuthorized = true;
 		//for health check of the endpoint
-		else if (request.headers.authorization) {
-			try {
-				const payload = await this.tokenVerifier.verify(request.headers.authorization);
-				const requestType: string = request.body?.RequestType;
-			} catch (err) {
-				this.logger.logError(err);
-				response.status(403).send(); //Token malformed or expired.
-			}
-		} else response.status(401).send(); //No auth header, you are not authenticated.
+		// else if (request.headers.authorization) {
+		// 	try {
+		// 		const payload = await this.tokenVerifier.verify(request.headers.authorization);
+		// 		const requestType: string = request.body?.RequestType;
+		// 	} catch (err) {
+		// 		this.logger.logError(err);
+		// 		response.status(403).send(); //Token malformed or expired.
+		// 	}
+		// } else response.status(401).send(); //No auth header, you are not authenticated.
 
 		if (isAuthorized) 
             await next();
-
-		else response.status(403).send();
+		else
+			response.status(403).send();
 	};
 }
