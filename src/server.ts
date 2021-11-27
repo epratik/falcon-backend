@@ -37,7 +37,7 @@ container.registerSingleton("IConfigManager", ConfigManager);
 container.registerSingleton("ISQLHelper", SQLHelper);
 container.registerSingleton("ILogger", WinstonLogger);
 
-container.registerInstance("IPostRepository", PostRepository);
+container.registerSingleton("IPostRepository", PostRepository);
 
 container.register("TestController", TestController);
 

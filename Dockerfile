@@ -14,18 +14,21 @@ RUN npm install
 RUN npm run tsc
 
 #Stage2- copy compiled source from stage 1 and install only prod dependencies.
-# FROM node:14-alpine AS stage2
-# ENV NODE_ENV development
-# WORKDIR /app
+FROM node:14-alpine AS stage2
+ENV NODE_ENV local
+WORKDIR /app
 # ADD *.crt /usr/local/share/ca-certificates/
 # RUN apk update && apk add ca-certificates && rm -rf /var/cache/apk/*
-# RUN update-ca-certificates
+
+RUN apt-get update && apt-get install -y ca-certificates && rm -rf /var/lib/apt/lists/*
+RUN update-ca-certificates
+COPY --from=stage1 ./app/dist ./dist
+
 # COPY src/certificates /app
-# COPY --from=stage1 ./app/dist ./dist
 # COPY .npmrc .npmrc  
-# COPY package* ./
-# RUN npm config set strict-ssl=false
-# RUN npm install
+COPY package* ./
+RUN npm config set strict-ssl=false
+RUN npm install --only=production
 # RUN rm -f .npmrc
 EXPOSE 80
 CMD ["npm","start"]
