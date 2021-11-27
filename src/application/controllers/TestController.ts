@@ -15,7 +15,7 @@ export class TestController {
 			const limit: number = request.query?.limit as unknown as number;
 			const offset: number = request.query?.offset as unknown as number;
 			const result = await this.topContentUseCase.execute(limit, offset);
-			return result;
+			response.send(result);
 
 		} catch (err: any) {
 			this.logger.logError(err);
