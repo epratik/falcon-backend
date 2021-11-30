@@ -37,7 +37,7 @@ export class ConfigManager implements IConfigManager {
             if (config && config.cacheDurationInSeconds) return Number(config.cacheDurationInSeconds);
             else return 10800;
         })();
-    }
+	}
 
     get getLogLevel(): Promise<string> {
 		return (async () => {
@@ -83,11 +83,11 @@ export class ConfigManager implements IConfigManager {
 		})();
 	}
 
-	get getContentLimit(): Promise<number | undefined> {
+	get getContentLimit(): Promise<number> {
 		return (async () => {
 			const config = await this.getConfigFileFromCache();
 			if (config && config.contentLimit) return config.contentLimit;
-			else return 100;
+			else return 25;
 		})();
 	}
 }

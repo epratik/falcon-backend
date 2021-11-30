@@ -6,6 +6,6 @@ export interface IConfigManager {
 	getPostgreJumpServerSettings: Promise<string | undefined>;
 	getPostgreJumpServerKey: Promise<string | undefined>;
 	getDuration: Promise<number>;
-	getLogLevel: Promise<string>
-
+	getLogLevel: Promise<string>;
+	getContentLimit: Promise<number>;
 }
