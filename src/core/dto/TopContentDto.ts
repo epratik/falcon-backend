@@ -1,10 +1,10 @@
-import { Post } from "../model/Post";
 import { Preview } from "../model/Preview";
+import { TopPostsDto } from "./TopPostsDto";
 
 export type TopContentDto = {
     content: [
         {
-            post: Post,
+            post: TopPostsDto,
             preview: Preview
         }
     ]|any[]

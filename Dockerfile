@@ -23,6 +23,7 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y ca-certificates && rm -rf /var/lib/apt/lists/*
 RUN update-ca-certificates
 COPY --from=stage1 ./app/dist ./dist
+#NOT COPIED .ENV FILE - ENVIROMENT VAR NEEDS TO BE PASSED IN DOCKER RUN COMMAND
 
 # COPY src/certificates /app
 # COPY .npmrc .npmrc  

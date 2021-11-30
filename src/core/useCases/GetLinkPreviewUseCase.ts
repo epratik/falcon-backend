@@ -30,8 +30,7 @@ export class GetLinkPreviewUseCase implements IGetLinkPreviewUseCase {
         const preview: Preview = {
             title: title,
             siteName: siteName,
-            images: images,
-            favicons: favicons
+            images: images
         }
 
         return preview;

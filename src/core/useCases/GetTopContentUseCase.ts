@@ -12,10 +12,10 @@ export class GetTopContentUseCase implements IGetTopContentUseCase {
         @inject("IPostRepository") private postRepo: IPostRepository
     ) { }
 
-    execute = async (limit: number, offset: number): Promise<TopContentDto> => {
+    execute = async (limit: number, offset: number, tag: string | undefined): Promise<TopContentDto> => {
         let topContent: TopContentDto | undefined = undefined;
-
-        const posts = await this.postRepo.getTopPosts(limit, offset);
+        
+        const posts = await this.postRepo.getTopPosts(limit, offset, tag);
         for (let i = 0; i < posts.length; i++) {
 
             const preview = await this.getLinkPreviewUseCase.execute(posts[i]);

@@ -1,5 +1,5 @@
-import { Post } from "../../model/Post";
+import { TopPostsDto } from "../../dto/TopPostsDto";
 
 export interface IPostRepository{
-    getTopPosts(limit: number, offset: number): Promise<Post[]>;
+    getTopPosts(limit: number, offset: number, tag: string | undefined): Promise<TopPostsDto[]>;
 }
