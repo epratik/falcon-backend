@@ -16,26 +16,25 @@ export class GetTopContentUseCase implements IGetTopContentUseCase {
         let topContent: TopContentDto | undefined = undefined;
         
         const posts = await this.postRepo.getTopPosts(limit, offset, tag);
-        for (let i = 0; i < posts.length; i++) {
-
-            const preview = await this.getLinkPreviewUseCase.execute(posts[i]);
-
+        await Promise.all(posts.map(async (item) => {
+            const preview = await this.getLinkPreviewUseCase.execute(item);
+            
             if (topContent && topContent.content) {
                 topContent.content.push({
-                    post: posts[i],
+                    post: item,
                     preview: preview
                 })
             } else {
                 topContent = {
                     content: [
                         {
-                            post: posts[i],
+                            post: item,
                             preview: preview
                         }
                     ]
                 }
             }
-        }
+        }));
 
         if (!topContent)
             topContent = { content: [] };
