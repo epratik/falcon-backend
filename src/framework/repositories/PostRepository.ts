@@ -30,7 +30,7 @@ export class PostRepository implements IPostRepository {
                 listId: item["gp_list_id"],
                 url: item["url"],
                 urlDescription: item["url_description"],
-                likes: item["action_name"],
+                likes: item["likes"],
                 userName: item["user_name"],
                 date: item["utc_date"],
                 listName: item["list_name"],

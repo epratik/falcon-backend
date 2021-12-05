@@ -4,8 +4,8 @@ export type PostPatchDto = {
 };
 
 export enum PostPatchType {
-    Like = 1,
-    Unlike = 2
+    Like = "Like",
+    Unlike = "Unlike"
 };
 
 export type LikeUnlike = {
