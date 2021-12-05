@@ -1,5 +1,4 @@
 import express from "express";
-import { Request, Response } from "express";
 import http from "http";
 import "reflect-metadata";
 import dotenv from "dotenv";
@@ -19,6 +18,7 @@ import { GetLinkPreviewUseCase } from "./core/useCases/GetLinkPreviewUseCase";
 import { PostRepository } from "./framework/repositories/PostRepository";
 import { GetTopContentUseCase } from "./core/useCases/GetTopContentUseCase";
 import { PostController } from "./application/controllers/PostController";
+import { LikeUnlikeUseCase } from "./core/useCases/LikeUnlikeUseCase";
 
 console.log('printing node_env')
 console.log(process.env.NODE_ENV)
@@ -47,6 +47,7 @@ container.register("PostController", PostController);
 
 container.register("IGetLinkPreviewUseCase", GetLinkPreviewUseCase);
 container.register("IGetTopContentUseCase", GetTopContentUseCase);
+container.register("ILikeUnlikeUseCase", LikeUnlikeUseCase);
 
 //Factory and use case registories
 const tokenVerifier: TokenVerifier = container.resolve(TokenVerifier);
