@@ -6,5 +6,6 @@ export type TopPostsDto = {
     likes: number,
     userName: string,
     date: string,
-    listName: string
+    listName: string,
+    userId: number
 }

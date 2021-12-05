@@ -10,6 +10,10 @@ export abstract class Constants {
     static loggerName = "nodejsLogger";
     static apiPrefix = "api";
     static fnGetTopContent = "fnGetTopContent"
+    static procLike = "spLike"
+    static procUnlike = "spUnlike"
+    static procFollow = "spFollow"
+    static procUnfollow ="spUnfollow"
 
     static getServiceConfigPath(): string {
         return this.separator + this.projectName + this.separator + process.env.NODE_ENV +

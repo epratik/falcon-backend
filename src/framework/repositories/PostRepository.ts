@@ -9,7 +9,7 @@ import { Post } from "../../core/model/Post";
 import { TopPostsDto } from "../../core/dto/TopPostsDto";
 
 @injectable()
-export class PostRepository implements IPostRepository{
+export class PostRepository implements IPostRepository {
 
     constructor(@inject("ISQLHelper") private dbHelper: ISQLHelper) {
         
@@ -34,9 +34,31 @@ export class PostRepository implements IPostRepository{
                 userName: item["user_name"],
                 date: item["utc_date"],
                 listName: item["list_name"],
+                userId: item["gp_user_id"]
             })
         });
 
         return posts;
+    }
+
+    like = async (postId: number): Promise<void> => {
+
+        const args: any[] = [postId];
+        await this.dbHelper.callFunction(Constants.procLike, args);
+    }
+
+    unlike = async (postId: number): Promise<void> => {
+        const args: any[] = [postId];
+        await this.dbHelper.callFunction(Constants.procUnlike, args);
+    }
+
+    follow = async (email: string, userToFollow: number): Promise<void> => {
+        const args: any[] = [email, userToFollow];
+        await this.dbHelper.callFunction(Constants.procFollow, args);
+    }
+
+    unfollow = async (email: string, userToUnfollow: number): Promise<void> => {
+        const args: any[] = [email, userToUnfollow];
+        await this.dbHelper.callFunction(Constants.procUnfollow, args);
     }
 }

@@ -14,11 +14,11 @@ import { TokenVerifier } from "./framework/util/TokenVerifier";
 import { AuthorizationMiddleware } from "./application/middleware/AuthorizationMiddleware";
 import { Constants } from "./core/common/Constants";
 import { IRouter } from "./application/routes/IRouter";
-import { TestRouter } from "./application/routes/TestRouter";
+import { TestRouter } from "./application/routes/PostRouter";
 import { GetLinkPreviewUseCase } from "./core/useCases/GetLinkPreviewUseCase";
 import { PostRepository } from "./framework/repositories/PostRepository";
 import { GetTopContentUseCase } from "./core/useCases/GetTopContentUseCase";
-import { TestController } from "./application/controllers/TestController";
+import { PostController } from "./application/controllers/PostController";
 
 console.log('printing node_env')
 console.log(process.env.NODE_ENV)
@@ -43,7 +43,7 @@ container.registerSingleton("ILogger", WinstonLogger);
 
 container.registerSingleton("IPostRepository", PostRepository);
 
-container.register("TestController", TestController);
+container.register("PostController", PostController);
 
 container.register("IGetLinkPreviewUseCase", GetLinkPreviewUseCase);
 container.register("IGetTopContentUseCase", GetTopContentUseCase);
