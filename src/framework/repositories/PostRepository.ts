@@ -30,7 +30,7 @@ export class PostRepository implements IPostRepository {
                 listId: item["gp_list_id"],
                 url: item["url"],
                 urlDescription: item["url_description"],
-                likes: item["likes"],
+                likes: item["like"],
                 userName: item["user_name"],
                 date: item["utc_date"],
                 listName: item["list_name"],
@@ -44,21 +44,21 @@ export class PostRepository implements IPostRepository {
     like = async (postId: number): Promise<void> => {
 
         const args: any[] = [postId];
-        await this.dbHelper.callFunction(Constants.procLike, args);
+        await this.dbHelper.callProcedure(Constants.procLike, args);
     }
 
     unlike = async (postId: number): Promise<void> => {
         const args: any[] = [postId];
-        await this.dbHelper.callFunction(Constants.procUnlike, args);
+        await this.dbHelper.callProcedure(Constants.procUnlike, args);
     }
 
     follow = async (email: string, userToFollow: number): Promise<void> => {
         const args: any[] = [email, userToFollow];
-        await this.dbHelper.callFunction(Constants.procFollow, args);
+        await this.dbHelper.callProcedure(Constants.procFollow, args);
     }
 
     unfollow = async (email: string, userToUnfollow: number): Promise<void> => {
         const args: any[] = [email, userToUnfollow];
-        await this.dbHelper.callFunction(Constants.procUnfollow, args);
+        await this.dbHelper.callProcedure(Constants.procUnfollow, args);
     }
 }
