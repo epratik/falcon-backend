@@ -17,7 +17,24 @@
       "command": null,
       "linuxParameters": null,
       "cpu": 0,
-      "environment": [],
+      "environment": [
+        {
+          "name": "AWS_REGION",
+          "value": "us-west-2"
+        },
+        {
+          "name": "HTTP_PORT",
+          "value": "8080"
+        },
+        {
+          "name": "LOG_LEVEL",
+          "value": "info"
+        },
+        {
+          "name": "NODE_ENV",
+          "value": "local"
+        }
+      ],
       "resourceRequirements": null,
       "ulimits": null,
       "dnsServers": null,
@@ -64,7 +81,7 @@
     "EXTERNAL",
     "EC2"
   ],
-  "taskDefinitionArn": "arn:aws:ecs:us-west-2:075760899250:task-definition/gp-dev-ecs-taskdefinition:1",
+  "taskDefinitionArn": "arn:aws:ecs:us-west-2:075760899250:task-definition/gp-dev-ecs-taskdefinition:5",
   "family": "gp-dev-ecs-taskdefinition",
   "requiresAttributes": [
     {
@@ -93,7 +110,7 @@
   "networkMode": null,
   "runtimePlatform": null,
   "cpu": null,
-  "revision": 1,
+  "revision": 5,
   "status": "ACTIVE",
   "inferenceAccelerators": null,
   "proxyConfiguration": null,
