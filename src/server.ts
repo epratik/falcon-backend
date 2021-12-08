@@ -77,6 +77,10 @@ routes.forEach((router: IRouter) => {
 router.get("/", function (req, res) {
 	res.sendStatus(200);
 });
+//Test ecs deployment
+router.get("/ecs", function (req, res) {
+	res.sendStatus(200);
+});
 
 server.listen(port, host);
 console.log("Service started on port " + port);
