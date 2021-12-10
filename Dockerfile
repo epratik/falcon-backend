@@ -20,7 +20,7 @@ WORKDIR /app
 # ADD *.crt /usr/local/share/ca-certificates/
 # RUN apk update && apk add ca-certificates && rm -rf /var/cache/apk/*
 
-RUN apt-get update && apt-get install -y ca-certificates && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y ca-certificates && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
 RUN update-ca-certificates
 COPY --from=stage1 ./app/dist ./dist
 #NOT COPIED .ENV FILE - ENVIROMENT VAR NEEDS TO BE PASSED IN DOCKER RUN COMMAND

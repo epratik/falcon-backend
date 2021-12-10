@@ -55,10 +55,11 @@
       "healthCheck": {
         "retries": 3,
         "command": [
-          "curl -f http://localhost/api/"
+          "CMD-SHELL",
+          "curl -f http://127.0.0.1:8080/api/ || exit 1"
         ],
         "timeout": 5,
-        "interval": 60,
+        "interval": 5,
         "startPeriod": null
       },
       "essential": true,
@@ -81,7 +82,7 @@
     "EXTERNAL",
     "EC2"
   ],
-  "taskDefinitionArn": "arn:aws:ecs:us-west-2:075760899250:task-definition/gp-dev-ecs-taskdefinition:5",
+  "taskDefinitionArn": "arn:aws:ecs:us-west-2:075760899250:task-definition/gp-dev-ecs-taskdefinition:13",
   "family": "gp-dev-ecs-taskdefinition",
   "requiresAttributes": [
     {
@@ -110,7 +111,7 @@
   "networkMode": null,
   "runtimePlatform": null,
   "cpu": null,
-  "revision": 5,
+  "revision": 13,
   "status": "ACTIVE",
   "inferenceAccelerators": null,
   "proxyConfiguration": null,
