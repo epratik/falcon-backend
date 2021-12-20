@@ -19,6 +19,7 @@ import { PostRepository } from "./framework/repositories/PostRepository";
 import { GetTopContentUseCase } from "./core/useCases/GetTopContentUseCase";
 import { PostController } from "./application/controllers/PostController";
 import { LikeUnlikeUseCase } from "./core/useCases/LikeUnlikeUseCase";
+import { CorsMiddleware } from "./application/middleware/CorsMiddleware";
 
 console.log('printing node_env')
 console.log(process.env.NODE_ENV)
@@ -57,6 +58,7 @@ const host = "0.0.0.0";
 const port = Number(process.env.HTTP_PORT);
 
 const authMiddleware = new AuthorizationMiddleware(tokenVerifier, logger);
+const corsMiddleware = new CorsMiddleware();
 
 const router = express.Router();
 const app: express.Application = express();
@@ -68,6 +70,7 @@ const routes: Array<IRouter> = [];
 routes.push(new TestRouter(router));
 
 app.use(express.json());
+app.use(corsMiddleware.setCors);
 app.use(authMiddleware.authorize);
 app.use("/" + Constants.apiPrefix, router);
 routes.forEach((router: IRouter) => {
