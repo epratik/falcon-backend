@@ -1,12 +1,9 @@
-
 import { Constants } from "../../core/common/Constants";
 import { inject, injectable } from "tsyringe";
-import { ICacheManager } from "../../core/interfaces/framework/ICacheManager";
-import { IConfigManager } from "../../core/interfaces/common/IConfigManager";
 import { ISQLHelper } from "../../core/interfaces/framework/ISQLHelper";
 import { IPostRepository } from "../../core/interfaces/repositories/IPostRepository";
-import { Post } from "../../core/model/Post";
 import { TopPostsDto } from "../../core/dto/TopPostsDto";
+import { Post } from "../../core/model/Post";
 
 @injectable()
 export class PostRepository implements IPostRepository {
@@ -41,6 +38,28 @@ export class PostRepository implements IPostRepository {
         return posts;
     }
 
+    getPosts = async (listId:number): Promise<Post[]> => {
+
+        let posts: Post[] = [];
+
+        const args: any[] = [listId];
+       
+        const result = await this.dbHelper.callFunction(Constants.fnGetPosts, args);
+          
+        result.forEach((item: { [x: string]: any; }) => {
+            posts.push({
+                listId: listId,
+                postId: item["gp_post_id"],
+                tag: item["tag"],
+                url: item["url"],
+                urlDescription: item["url_description"],
+                likes: item["likes"]
+            })
+        });
+
+        return posts;
+    }
+
     like = async (postId: number): Promise<void> => {
 
         const args: any[] = [postId];
@@ -52,13 +71,9 @@ export class PostRepository implements IPostRepository {
         await this.dbHelper.callProcedure(Constants.procUnlike, args);
     }
 
-    follow = async (email: string, userToFollow: number): Promise<void> => {
-        const args: any[] = [email, userToFollow];
-        await this.dbHelper.callProcedure(Constants.procFollow, args);
-    }
-
-    unfollow = async (email: string, userToUnfollow: number): Promise<void> => {
-        const args: any[] = [email, userToUnfollow];
-        await this.dbHelper.callProcedure(Constants.procUnfollow, args);
+    checkIfPostBelongsToUser = async (postId: number, emailAddress: string): Promise<boolean> => {
+        const args: any[] = [postId, emailAddress];
+        const result = await this.dbHelper.callFunction(Constants.fnGetTopContent, args);
+        return result[0] as boolean;
     }
 }

@@ -17,7 +17,7 @@ export class GetTopContentUseCase implements IGetTopContentUseCase {
         
         const posts = await this.postRepo.getTopPosts(limit, offset, tag);
         await Promise.all(posts.map(async (item) => {
-            const preview = await this.getLinkPreviewUseCase.execute(item);
+            const preview = await this.getLinkPreviewUseCase.execute(item.url);
             
             if (topContent && topContent.content) {
                 topContent.content.push({

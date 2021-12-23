@@ -10,6 +10,11 @@ export abstract class Constants {
     static loggerName = "nodejsLogger";
     static apiPrefix = "api";
     static fnGetTopContent = "fnGetTopContent"
+    static fnCheckIfPostBelongsToUser = "fnCheckIfPostBelongsToUser";
+    static fnCheckIfListExists = "fnCheckIfListExists";
+    static fnCheckIfListNameExists = "fnCheckIfListNameExists";
+    static fnGetLists = "fnGetLists";
+    static fnGetPosts = "fnGetPosts";
     static procLike = "spLike"
     static procUnlike = "spUnlike"
     static procFollow = "spFollow"

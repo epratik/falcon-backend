@@ -10,13 +10,13 @@ export class GetLinkPreviewUseCase implements IGetLinkPreviewUseCase {
     constructor(
     ) { }
 
-    execute = async (post: Post): Promise<Preview> => {
+    execute = async (url: string): Promise<Preview> => {
         let title = "";
         let siteName: string | undefined = "";
         let images: string[] = [];
         let favicons: string[] = [];
  
-        const linkPreview = await getLinkPreview(post.url);
+        const linkPreview = await getLinkPreview(url);
 
         if ("title" in linkPreview)
             title = linkPreview.title;
