@@ -18,6 +18,10 @@ export class PostController {
 	get = async (request: express.Request, response: express.Response): Promise<any> => {
 		try {
 			// const limit: number = request.query?.limit as unknown as number;
+			console.log('*******************')
+			console.log(request.context.userId)
+			console.log(request.context.email)
+			
 			const limit = await this.configManager.getContentLimit;
 			let tag: string | undefined = undefined;
 

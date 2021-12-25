@@ -13,6 +13,7 @@ export type JwtPayload = {
     auth_time: number,
     iss: string,
     "cognito:username": string,
+    userId:number,
     exp: number,
     iat: number,
     email:string

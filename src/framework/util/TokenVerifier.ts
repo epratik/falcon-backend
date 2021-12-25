@@ -15,6 +15,11 @@ export class TokenVerifier implements ITokenVerifier{
     
     }
 
+    /**
+     * pending - verification of user pool id
+     * @param token 
+     * @returns 
+     */
     verify = async (token: string): Promise<JwtPayload> => {
         //using auth0 library to decode token header and payload, it supports a generic token type.
         //token header KID - use this to fetch the right key for token verification.
