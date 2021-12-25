@@ -30,6 +30,7 @@ export class AuthorizationMiddleware {
 				const payload = await this.tokenVerifier.verify(request.headers.authorization);
 				request.context.email = payload.email;
 				request.context.userId = payload.userId;
+				isAuthorized = true;
 			} catch (err) {
 				this.logger.logError(err);
 				response.status(403).send(); //Token malformed or expired.
