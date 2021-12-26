@@ -7,7 +7,7 @@ export class CorsMiddleware {
     setCors = async (request: express.Request, response: express.Response, next: express.NextFunction) => {
         response.setHeader('Access-Control-Allow-Origin', '*');
         response.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-        response.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+        response.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type,authorization');
 
         if (request.method === "OPTIONS") {
             return response.status(200).end();
