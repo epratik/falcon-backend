@@ -8,10 +8,10 @@ export class FollowUnfollowUseCase {
         
     }
 
-    execute = async (loggedInUserEmail: string, userIdToFollowUnfollow: number, patchType: UserPatchType): Promise<void> => {
+    execute = async (userId: number, userIdToFollowUnfollow: number, patchType: UserPatchType): Promise<void> => {
         if (patchType === UserPatchType.Follow)
-            await this.userRepo.follow(loggedInUserEmail, userIdToFollowUnfollow);
+            await this.userRepo.follow(userId, userIdToFollowUnfollow);
         else
-            await this.userRepo.unfollow(loggedInUserEmail, userIdToFollowUnfollow);
+            await this.userRepo.unfollow(userId, userIdToFollowUnfollow);
     }
 }

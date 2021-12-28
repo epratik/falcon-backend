@@ -4,6 +4,7 @@ import { ISQLHelper } from "../../core/interfaces/framework/ISQLHelper";
 import { IPostRepository } from "../../core/interfaces/repositories/IPostRepository";
 import { TopPostsDto } from "../../core/dto/TopPostsDto";
 import { Post } from "../../core/model/Post";
+import { CreatePostDto } from "../../core/dto/CreatePostDto";
 
 @injectable()
 export class PostRepository implements IPostRepository {
@@ -71,9 +72,20 @@ export class PostRepository implements IPostRepository {
         await this.dbHelper.callProcedure(Constants.procUnlike, args);
     }
 
-    checkIfPostBelongsToUser = async (postId: number, emailAddress: string): Promise<boolean> => {
-        const args: any[] = [postId, emailAddress];
+    checkIfPostBelongsToUser = async (postId: number, userId: number): Promise<boolean> => {
+        const args: any[] = [postId, userId];
         const result = await this.dbHelper.callFunction(Constants.fnGetTopContent, args);
-        return result[0] as boolean;
+        const item = result[0];
+        return item[Object.keys(item)[0]] as boolean;
+    }
+
+    createPost = async (postDto: CreatePostDto) => {
+        const args: any[] = [postDto.tag, postDto.url, postDto.urlDescription, postDto.listId];
+        await this.dbHelper.callProcedure(Constants.procCreatePost, args);
+    }
+
+    deactivatePost = async (postId: number) => {
+        const args: any[] = [postId];
+        await this.dbHelper.callProcedure(Constants.procDeletePost, args);
     }
 }

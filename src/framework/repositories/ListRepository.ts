@@ -1,5 +1,6 @@
 import { inject, injectable } from "tsyringe";
 import { Constants } from "../../core/common/Constants";
+import { CreateListDto } from "../../core/dto/CreateListDto";
 import { ISQLHelper } from "../../core/interfaces/framework/ISQLHelper";
 import { List } from "../../core/model/List";
 
@@ -9,11 +10,11 @@ export class ListRepository {
         
     }
 
-    getLists = async (emailAddress:string): Promise<List[]> => {
+    getLists = async (userId: number): Promise<List[]> => {
 
         let lists: List[] = [];
 
-        const args: any[] = [emailAddress];
+        const args: any[] = [userId];
        
         const result = await this.dbHelper.callFunction(Constants.fnGetLists, args);
           
@@ -29,15 +30,22 @@ export class ListRepository {
         return lists;
     }
 
-    checkIfListExists = async (listId: number, emailAddress: string): Promise<boolean> => {
-        const args: any[] = [listId, emailAddress];
+    checkIfListExists = async (listId: number, userId: number): Promise<boolean> => {
+        const args: any[] = [listId, userId];
         const result = await this.dbHelper.callFunction(Constants.fnCheckIfListExists, args);
-        return result[0] as boolean;
+        const item = result[0];
+        return item[Object.keys(item)[0]] as boolean;
     }
 
-    checkIfListNameExists = async (listName: string, emailAddress: string): Promise<boolean> => {
-        const args: any[] = [listName, emailAddress];
+    checkIfListNameExists = async (listName: string, userId: number): Promise<boolean> => {
+        const args: any[] = [listName, userId];
         const result = await this.dbHelper.callFunction(Constants.fnCheckIfListNameExists, args);
-        return result[0] as boolean;
+        const item = result[0];
+        return item[Object.keys(item)[0]] as boolean;
+    }
+
+    createList = async (listDto: CreateListDto, userId: number) => {
+        const args: any[] = [listDto.name, listDto.description, userId];
+        await this.dbHelper.callProcedure(Constants.procCreateList, args);
     }
 }

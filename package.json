@@ -54,6 +54,7 @@
 		"tsyringe": "^4.5.0",
 		"tunnel-ssh": "^4.1.4",
 		"url-pattern": "^1.0.3",
-		"winston": "^3.3.3"
+		"winston": "^3.3.3",
+		"zod": "^3.5.1"
 	}
 }

@@ -10,6 +10,5 @@ export type UserPatchDto = {
 };
 
 export type FollowUnfollow = {
-    userToFollowUnfollow: number;
-    loggedInEmail: string
+    userToFollowUnfollow: number
 }

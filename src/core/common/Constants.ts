@@ -18,8 +18,15 @@ export abstract class Constants {
     static procLike = "spLike"
     static procUnlike = "spUnlike"
     static procFollow = "spFollow"
-    static procUnfollow ="spUnfollow"
+    static procUnfollow = "spUnfollow"
+    static procCreateList = "spCreateList"
+    static procCreatePost = "spCreatePost"
+    static procDeletePost ="spDeactivatePost"
 
+    static errorPostDoesNotBelongToUser = "Post does not belong to the logged in user."
+    static errorListNameAlreadyExists = "List name already exists. Please choose a different name."
+    static errorListIdDoesNotBelongToUser = "List id does not belong to the logged in user."
+    
     static getServiceConfigPath(): string {
         return this.separator + this.projectName + this.separator + process.env.NODE_ENV +
             this.separator + this.serviceConfigName

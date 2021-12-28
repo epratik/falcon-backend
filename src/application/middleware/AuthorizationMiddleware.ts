@@ -1,6 +1,7 @@
 // import { Context, UnauthorizedError, ForbiddenError } from "@zode/zode";
 import express from "express";
 import { inject, injectable } from "tsyringe";
+import { IUserContext } from "../../core/interfaces/common/IUserContext";
 // import { ErrorHandler } from "../../core/common/ErrorHandler";
 import { ILogger } from "../../core/interfaces/framework/ILogger";
 import { ITokenVerifier } from "../../core/interfaces/framework/ITokenVerifier";
@@ -29,6 +30,7 @@ export class AuthorizationMiddleware {
 			try {
 				
 				const payload = await this.tokenVerifier.verify(request.headers.authorization);
+				//Set user context in request
 				request.context = {
 					email: payload.email,
 					userId: payload.userId

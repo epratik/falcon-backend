@@ -3,8 +3,10 @@ import express from "express";
 import { ILogger } from "../../core/interfaces/framework/ILogger";
 import { IGetTopContentUseCase } from "../../core/interfaces/useCases/IGetTopContentUseCase";
 import { IConfigManager } from "../../core/interfaces/common/IConfigManager";
-import { PostPatchType, PostPatchDto } from "../../core/dto/PostPatchDto";
+import { PostPatchDto, PostPatchTypeSchema, PostPatchDtoSchema } from "../../core/dto/PostPatchDto";
 import { ILikeUnlikeUseCase } from "../../core/interfaces/useCases/ILikeUnlikeUseCase";
+import { IPostDeactivateUseCase } from "../../core/interfaces/useCases/IPostDeactivateUseCase";
+import { IPostValidator } from "../../core/interfaces/validators/IPostValidator";
 
 @injectable()
 export class PostController {
@@ -12,16 +14,14 @@ export class PostController {
 		@inject("ILogger") private logger: ILogger,
 		@inject("IGetTopContentUseCase") private topContentUseCase: IGetTopContentUseCase,
 		@inject("ILikeUnlikeUseCase") private likeUnlikeUseCase: ILikeUnlikeUseCase,
-		@inject("IConfigManager") private configManager: IConfigManager
+		@inject("IPostDeactivateUseCase") private postDeactivateUseCase: IPostDeactivateUseCase,
+		@inject("IConfigManager") private configManager: IConfigManager,
+		@inject("IPostValidator") private postValidator: IPostValidator
 	) { }
 
 	get = async (request: express.Request, response: express.Response): Promise<any> => {
 		try {
-			// const limit: number = request.query?.limit as unknown as number;
-			console.log('*******************')
-			console.log(request.context.userId)
-			console.log(request.context.email)
-			
+			// const limit: number = request.query?.limit as unknown as number;	
 			const limit = await this.configManager.getContentLimit;
 			let tag: string | undefined = undefined;
 
@@ -40,11 +40,16 @@ export class PostController {
 
 	patch = async (request: express.Request, response: express.Response): Promise<any> => {
 		try {
-			const body = request.body as PostPatchDto;
+			const body: PostPatchDto = PostPatchDtoSchema.parse(request.body);
+
 			switch (body.patchType) {
-				case PostPatchType.Like || PostPatchType.Unlike: {
-					this.likeUnlikeUseCase.execute(body.requestBody.postId, body.patchType)
+				case PostPatchTypeSchema.enum.Like || PostPatchTypeSchema.enum.Unlike: {
+					await this.likeUnlikeUseCase.execute(body.requestBody.postId, body.patchType)
 					break;
+				}
+				case PostPatchTypeSchema.enum.Deactivate: {
+					await this.postValidator.checkIfPostBelongsToUser(body.requestBody.postId, request.context.userId);
+					await this.postDeactivateUseCase.execute(body.requestBody.postId)
 				}
 				default: {
 					break;

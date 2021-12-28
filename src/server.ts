@@ -20,6 +20,7 @@ import { GetTopContentUseCase } from "./core/useCases/GetTopContentUseCase";
 import { PostController } from "./application/controllers/PostController";
 import { LikeUnlikeUseCase } from "./core/useCases/LikeUnlikeUseCase";
 import { CorsMiddleware } from "./application/middleware/CorsMiddleware";
+import { UserContext } from "./core/model/UserContext";
 
 console.log('printing node_env')
 console.log(process.env.NODE_ENV)
@@ -41,7 +42,6 @@ container.registerSingleton("IConfigManager", ConfigManager);
 //you can also use SQLHelperMock if you do not want to connect to the database.
 container.registerSingleton("ISQLHelper", SQLHelper);
 container.registerSingleton("ILogger", WinstonLogger);
-
 container.registerSingleton("IPostRepository", PostRepository);
 
 container.register("PostController", PostController);
@@ -49,6 +49,8 @@ container.register("PostController", PostController);
 container.register("IGetLinkPreviewUseCase", GetLinkPreviewUseCase);
 container.register("IGetTopContentUseCase", GetTopContentUseCase);
 container.register("ILikeUnlikeUseCase", LikeUnlikeUseCase);
+
+container.register("IUserContext", UserContext);
 
 //Factory and use case registories
 const tokenVerifier: TokenVerifier = container.resolve(TokenVerifier);

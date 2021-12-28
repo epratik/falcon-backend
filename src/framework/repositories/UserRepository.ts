@@ -9,13 +9,13 @@ export class UserRepository implements IUserRepository{
     constructor(@inject('ISQLHelper') private dbHelper:ISQLHelper) {
     }
 
-    follow = async (email: string, userToFollow: number): Promise<void> => {
-        const args: any[] = [email, userToFollow];
+    follow = async (userId: number, userToFollow: number): Promise<void> => {
+        const args: any[] = [userId, userToFollow];
         await this.dbHelper.callProcedure(Constants.procFollow, args);
     }
 
-    unfollow = async (email: string, userToUnfollow: number): Promise<void> => {
-        const args: any[] = [email, userToUnfollow];
+    unfollow = async (userId: number, userToUnfollow: number): Promise<void> => {
+        const args: any[] = [userId, userToUnfollow];
         await this.dbHelper.callProcedure(Constants.procUnfollow, args);
     }
 }

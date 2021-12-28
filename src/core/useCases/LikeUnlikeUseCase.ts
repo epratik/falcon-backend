@@ -1,5 +1,5 @@
 import { inject, injectable } from "tsyringe";
-import { PostPatchType } from "../dto/PostPatchDto";
+import { PostPatchType, PostPatchTypeSchema } from "../dto/PostPatchDto";
 import { IPostRepository } from "../interfaces/repositories/IPostRepository";
 import { ILikeUnlikeUseCase } from "../interfaces/useCases/ILikeUnlikeUseCase";
 
@@ -10,7 +10,7 @@ export class LikeUnlikeUseCase implements ILikeUnlikeUseCase {
     ) { }
 
     execute = async (postId: number, patchType: PostPatchType): Promise<void> => {
-        if (patchType === PostPatchType.Like)
+        if (patchType === PostPatchTypeSchema.enum.Like)
             await this.postRepo.like(postId);
         else
             await this.postRepo.unlike(postId);           

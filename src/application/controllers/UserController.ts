@@ -18,7 +18,7 @@ export class UserController{
             const body = request.body as UserPatchDto;
             switch (body.patchType) {
                 case UserPatchType.Follow || UserPatchType.Unfollow: {
-                    this.followUnfollowUseCase.execute(body.requestBody.loggedInEmail, body.requestBody.userToFollowUnfollow, body.patchType)
+                    this.followUnfollowUseCase.execute(request.context.userId, body.requestBody.userToFollowUnfollow, body.patchType)
                     break;
                 }
                 default: {
