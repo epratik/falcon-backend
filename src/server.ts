@@ -13,7 +13,7 @@ import { TokenVerifier } from "./framework/util/TokenVerifier";
 import { AuthorizationMiddleware } from "./application/middleware/AuthorizationMiddleware";
 import { Constants } from "./core/common/Constants";
 import { IRouter } from "./application/routes/IRouter";
-import { TestRouter } from "./application/routes/PostRouter";
+import { PostRouter } from "./application/routes/PostRouter";
 import { GetLinkPreviewUseCase } from "./core/useCases/GetLinkPreviewUseCase";
 import { PostRepository } from "./framework/repositories/PostRepository";
 import { GetTopContentUseCase } from "./core/useCases/GetTopContentUseCase";
@@ -21,6 +21,20 @@ import { PostController } from "./application/controllers/PostController";
 import { LikeUnlikeUseCase } from "./core/useCases/LikeUnlikeUseCase";
 import { CorsMiddleware } from "./application/middleware/CorsMiddleware";
 import { UserContext } from "./core/model/UserContext";
+import { UserRepository } from "./framework/repositories/UserRepository";
+import { ListRepository } from "./framework/repositories/ListRepository";
+import { CreateListUseCase } from "./core/useCases/CreateListUseCase";
+import { CreatePostUseCase } from "./core/useCases/CreatePostUseCase";
+import { FollowUnfollowUseCase } from "./core/useCases/FollowUnfollowUseCase";
+import { GetListsUseCase } from "./core/useCases/GetListsUseCase";
+import { GetPostsUseCase } from "./core/useCases/GetPostsUseCase";
+import { PostDeactivateUseCase } from "./core/useCases/PostDeactivateUseCase";
+import { ListValidator } from "./core/CustomValidators/ListValidator";
+import { PostValidator } from "./core/CustomValidators/PostValidator";
+import { ListController } from "./application/controllers/ListController";
+import { UserController } from "./application/controllers/UserController";
+import { ListRouter } from "./application/routes/ListRouter";
+import { UserRouter } from "./application/routes/UserRouter";
 
 console.log('printing node_env')
 console.log(process.env.NODE_ENV)
@@ -43,14 +57,26 @@ container.registerSingleton("IConfigManager", ConfigManager);
 container.registerSingleton("ISQLHelper", SQLHelper);
 container.registerSingleton("ILogger", WinstonLogger);
 container.registerSingleton("IPostRepository", PostRepository);
+container.registerSingleton("IUserRepository", UserRepository);
+container.registerSingleton("IListRepository", ListRepository);
 
 container.register("PostController", PostController);
+container.register("ListController", ListController);
+container.register("UserController", UserController);
 
 container.register("IGetLinkPreviewUseCase", GetLinkPreviewUseCase);
 container.register("IGetTopContentUseCase", GetTopContentUseCase);
 container.register("ILikeUnlikeUseCase", LikeUnlikeUseCase);
+container.register("ICreateListUseCase", CreateListUseCase);
+container.register("ICreatePostUseCase", CreatePostUseCase);
+container.register("IFollowUnfollowUseCase",FollowUnfollowUseCase);
+container.register("IGetListsUseCase",GetListsUseCase);
+container.register("IGetPostsUseCase", GetPostsUseCase);
+container.register("IPostDeactivateUseCase", PostDeactivateUseCase);
 
 container.register("IUserContext", UserContext);
+container.register("IListValidator", ListValidator);
+container.register("IPostValidator", PostValidator);
 
 //Factory and use case registories
 const tokenVerifier: TokenVerifier = container.resolve(TokenVerifier);
@@ -69,7 +95,9 @@ const routes: Array<IRouter> = [];
 //modify response
 
 //Setup and initialize all routes
-routes.push(new TestRouter(router));
+routes.push(new PostRouter(router));
+routes.push(new ListRouter(router));
+routes.push(new UserRouter(router));
 
 app.use(express.json());
 app.use(corsMiddleware.setCors);
