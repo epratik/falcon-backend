@@ -1,9 +1,10 @@
 import { CreatePostDto } from "../../dto/CreatePostDto";
-import { TopPostsDto } from "../../dto/TopPostsDto";
+import { ViewPostsDto } from "../../dto/ViewPostsDto";
 import { Post } from "../../model/Post";
 
 export interface IPostRepository {
-    getTopPosts(limit: number, offset: number, tag: string | undefined): Promise<TopPostsDto[]>;
+    getTopPosts(limit: number, offset: number, tag: string | undefined): Promise<ViewPostsDto[]>;
+    getFollowedPosts(limit: number, offset: number, userId: number): Promise<ViewPostsDto[]>;
     getPosts(listId: number): Promise<Post[]>;
     like(postId: number): Promise<void>;
     unlike(postId: number): Promise<void>;

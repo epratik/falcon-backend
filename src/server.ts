@@ -16,7 +16,6 @@ import { IRouter } from "./application/routes/IRouter";
 import { PostRouter } from "./application/routes/PostRouter";
 import { GetLinkPreviewUseCase } from "./core/useCases/GetLinkPreviewUseCase";
 import { PostRepository } from "./framework/repositories/PostRepository";
-import { GetTopContentUseCase } from "./core/useCases/GetTopContentUseCase";
 import { PostController } from "./application/controllers/PostController";
 import { LikeUnlikeUseCase } from "./core/useCases/LikeUnlikeUseCase";
 import { CorsMiddleware } from "./application/middleware/CorsMiddleware";
@@ -35,6 +34,7 @@ import { ListController } from "./application/controllers/ListController";
 import { UserController } from "./application/controllers/UserController";
 import { ListRouter } from "./application/routes/ListRouter";
 import { UserRouter } from "./application/routes/UserRouter";
+import { ContentService } from "./core/services/ContentService";
 
 console.log('printing node_env')
 console.log(process.env.NODE_ENV)
@@ -65,7 +65,7 @@ container.register("ListController", ListController);
 container.register("UserController", UserController);
 
 container.register("IGetLinkPreviewUseCase", GetLinkPreviewUseCase);
-container.register("IGetTopContentUseCase", GetTopContentUseCase);
+container.register("IContentService", ContentService);
 container.register("ILikeUnlikeUseCase", LikeUnlikeUseCase);
 container.register("ICreateListUseCase", CreateListUseCase);
 container.register("ICreatePostUseCase", CreatePostUseCase);

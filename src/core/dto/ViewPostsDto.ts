@@ -1,4 +1,4 @@
-export type TopPostsDto = {
+export type ViewPostsDto = {
     postId: number,
     listId: number,
     url: string,

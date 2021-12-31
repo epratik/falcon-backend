@@ -1,7 +1,6 @@
 import { inject, injectable } from "tsyringe";
 import express from "express";
 import { ILogger } from "../../core/interfaces/framework/ILogger";
-import { IGetTopContentUseCase } from "../../core/interfaces/useCases/IGetTopContentUseCase";
 import { IConfigManager } from "../../core/interfaces/common/IConfigManager";
 import { PostPatchDto, PostPatchTypeSchema, PostPatchDtoSchema } from "../../core/dto/PostPatchDto";
 import { ILikeUnlikeUseCase } from "../../core/interfaces/useCases/ILikeUnlikeUseCase";
@@ -11,12 +10,13 @@ import { IGetPostsUseCase } from "../../core/interfaces/useCases/IGetPostsUseCas
 import { ICreatePostUseCase } from "../../core/interfaces/useCases/ICreatePostUseCase";
 import { CreatePostDto, CreatePostDtoSchema } from "../../core/dto/CreatePostDto";
 import { IListValidator } from "../../core/interfaces/validators/IListValidator";
+import { IContentService } from "../../core/interfaces/services/IGetContentService";
 
 @injectable()
 export class PostController {
 	constructor(
 		@inject("ILogger") private logger: ILogger,
-		@inject("IGetTopContentUseCase") private topContentUseCase: IGetTopContentUseCase,
+		@inject("IContentService") private contentService: IContentService,
 		@inject("ILikeUnlikeUseCase") private likeUnlikeUseCase: ILikeUnlikeUseCase,
 		@inject("IPostDeactivateUseCase") private postDeactivateUseCase: IPostDeactivateUseCase,
 		@inject("IConfigManager") private configManager: IConfigManager,
@@ -36,7 +36,26 @@ export class PostController {
 			if (request.query && request.query.tag)
 				tag = request.query?.tag as unknown as string;
 
-			const result = await this.topContentUseCase.execute(limit, offset, tag);
+			const result = await this.contentService.getTopContent(limit, offset, tag);
+			response.send(result);
+
+		} catch (err: any) {
+			this.logger.logError(err);
+			response.send(500);
+		}
+	};
+
+	getFollowedPosts = async (request: express.Request, response: express.Response): Promise<any> => {
+		try {
+			// const limit: number = request.query?.limit as unknown as number;	
+			const limit = await this.configManager.getContentLimit;
+			let tag: string | undefined = undefined;
+
+			const offset: number = request.query?.offset as unknown as number;
+			if (request.query && request.query.tag)
+				tag = request.query?.tag as unknown as string;
+
+			const result = await this.contentService.getFollowedContent(limit, offset, request.context.userId);
 			response.send(result);
 
 		} catch (err: any) {
