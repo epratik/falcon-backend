@@ -2,9 +2,10 @@ import { injectable, inject } from "tsyringe";
 import { Constants } from "../common/Constants";
 import { IUserContext } from "../interfaces/common/IUserContext";
 import { IListRepository } from "../interfaces/repositories/IListRepository";
+import { IListValidator } from "../interfaces/validators/IListValidator";
 
 @injectable()
-export class ListValidator {
+export class ListValidator implements IListValidator{
     constructor(
         @inject('IListRepository') private listRepo: IListRepository) {
         

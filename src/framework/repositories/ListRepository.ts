@@ -2,10 +2,11 @@ import { inject, injectable } from "tsyringe";
 import { Constants } from "../../core/common/Constants";
 import { CreateListDto } from "../../core/dto/CreateListDto";
 import { ISQLHelper } from "../../core/interfaces/framework/ISQLHelper";
+import { IListRepository } from "../../core/interfaces/repositories/IListRepository";
 import { List } from "../../core/model/List";
 
 injectable()
-export class ListRepository {
+export class ListRepository implements IListRepository{
     constructor(@inject('ISQLHelper') private dbHelper: ISQLHelper) {
         
     }
