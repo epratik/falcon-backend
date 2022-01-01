@@ -4,7 +4,7 @@ import { ISQLHelper } from "../../core/interfaces/framework/ISQLHelper";
 import { IUserRepository } from "../../core/interfaces/repositories/IUserRepository";
 
 
-injectable()
+@injectable()
 export class UserRepository implements IUserRepository{
     constructor(@inject('ISQLHelper') private dbHelper:ISQLHelper) {
     }

@@ -5,7 +5,7 @@ import { IConfigManager } from "../../core/interfaces/common/IConfigManager";
 import { IFollowUnfollowUseCase } from "../../core/interfaces/useCases/IFollowUnfollowUseCase";
 import { UserPatchDto, UserPatchType } from "../../core/dto/UserPatchDto";
 
-injectable()
+@injectable()
 export class UserController{
     constructor(
     @inject("ILogger") private logger: ILogger,

@@ -22,7 +22,7 @@ export class PostController {
 		@inject("IPostDeactivateUseCase") private postDeactivateUseCase: IPostDeactivateUseCase,
 		@inject("IConfigManager") private configManager: IConfigManager,
 		@inject("IPostValidator") private postValidator: IPostValidator,
-		@inject("IListRepository") private listRepo: IListRepository,
+		@inject("IListValidator") private listValidator: IListValidator,
 		@inject("IGetPostsUseCase") private getPostUseCase: IGetPostsUseCase,
 		@inject("ICreatePostUseCase") private createPostUseCase: ICreatePostUseCase
 	) { }
@@ -107,7 +107,7 @@ export class PostController {
 	post = async (request: express.Request, response: express.Response): Promise<any> => {
 		try {
 			const createPostDto: CreatePostDto = CreatePostDtoSchema.parse(request.body);
-			// await this.listValidator.checkIfListExists(createPostDto.listId, request.context.userId);
+			await this.listValidator.checkIfListExists(createPostDto.listId, request.context.userId);
 			await this.createPostUseCase.execute(createPostDto);
 
 			return response.send(201);

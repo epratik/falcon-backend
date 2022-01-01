@@ -2,7 +2,7 @@ import { inject, injectable } from "tsyringe";
 import { UserPatchType } from "../dto/UserPatchDto";
 import { IUserRepository } from "../interfaces/repositories/IUserRepository";
 
-injectable()
+@injectable()
 export class FollowUnfollowUseCase {
     constructor(@inject('IUserRepository') private userRepo: IUserRepository) {
         
