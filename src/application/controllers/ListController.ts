@@ -7,22 +7,33 @@ import { IGetListsUseCase } from "../../core/interfaces/useCases/IGetListsUseCas
 import { IListValidator } from "../../core/interfaces/validators/IListValidator";
 
 @injectable()
-export class ListController{
+export class ListController {
     constructor(
         @inject("ILogger") private logger: ILogger,
         @inject("IListValidator") private listValidator: IListValidator,
         @inject("IGetListsUseCase") private getListsUseCase: IGetListsUseCase,
-		@inject("ICreateListUseCase") private createListUseCase: ICreateListUseCase
+        @inject("ICreateListUseCase") private createListUseCase: ICreateListUseCase
     ) {
     }
 
     get = async (request: express.Request, response: express.Response): Promise<any> => {
-        return await this.getListsUseCase.execute(request.context.userId);
+        try {
+            response.send(await this.getListsUseCase.execute(request.context.userId));
+        } catch (err: any) {
+            this.logger.logError(err);
+            response.send(500);
+        }
     }
 
     post = async (request: express.Request, response: express.Response): Promise<any> => {
-        const createListDto: CreateListDto = CreateListDtoSchema.parse(request.body);
-        await this.listValidator.checkIfListNameExists(createListDto.name, request.context.userId);
-        await this.createListUseCase.execute(createListDto, request.context.userId);
+        try {
+            const createListDto: CreateListDto = CreateListDtoSchema.parse(request.body);
+            await this.listValidator.checkIfListNameExists(createListDto.name, request.context.userId);
+            await this.createListUseCase.execute(createListDto, request.context.userId);
+            response.send(201);
+        } catch (err: any) {
+            this.logger.logError(err);
+            response.send(500);
+        }
     }
 }
