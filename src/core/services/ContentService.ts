@@ -13,10 +13,13 @@ export class ContentService implements IContentService{
         
     }
 
-    getTopContent = async (limit: number, offset: number, tag: string | undefined): Promise<ContentDto> => {
+    getTopContent = async (limit: number, offset: number, tag: string | undefined, subTag:string|undefined): Promise<ContentDto> => {
         let topContent: ContentDto | undefined = undefined;
+        //top content is not an actual tag name, if its top content we get all top posts.
+        if (tag === 'top-content')
+            tag = undefined;
         
-        const posts = await this.postRepo.getTopPosts(limit, offset, tag);
+        const posts = await this.postRepo.getTopPosts(limit, offset, tag, subTag);
         await Promise.all(posts.map(async (item) => {
             const preview = await this.getLinkPreviewUseCase.execute(item.url);
             

@@ -9,7 +9,7 @@ export class CreateListUseCase implements ICreateListUseCase {
         @inject("IListRepository") private listRepo: IListRepository
     ) { }
 
-    execute = async (listDto: CreateListDto, userId: number): Promise<void> => {
-        await this.listRepo.createList(listDto, userId);
+    execute = async (listDto: CreateListDto, userId: number): Promise<number> => {
+        return await this.listRepo.createList(listDto, userId);
     }
 }

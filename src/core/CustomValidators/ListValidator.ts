@@ -15,9 +15,8 @@ export class ListValidator implements IListValidator{
      * if the list name is already present for the logged in user, then he cannot create a list with the same name.
      * @param name 
      */
-    checkIfListNameExists = async (name: string, userId: number): Promise<void> => {
-        if (await this.listRepo.checkIfListNameExists(name, userId))
-            throw new Error(Constants.errorListNameAlreadyExists);
+    checkIfListNameExists = async (name: string, userId: number): Promise<number | undefined> => {
+        return await this.listRepo.checkIfListNameExists(name, userId);
     }
 
     checkIfListExists = async (listId: number, userId: number): Promise<void> => {

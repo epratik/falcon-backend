@@ -38,15 +38,17 @@ export class ListRepository implements IListRepository{
         return item[Object.keys(item)[0]] as boolean;
     }
 
-    checkIfListNameExists = async (listName: string, userId: number): Promise<boolean> => {
+    checkIfListNameExists = async (listName: string, userId: number): Promise<number|undefined> => {
         const args: any[] = [listName, userId];
         const result = await this.dbHelper.callFunction(Constants.fnCheckIfListNameExists, args);
         const item = result[0];
-        return item[Object.keys(item)[0]] as boolean;
+        const value = item[Object.keys(item)[0]];
+        return value ? value as number : undefined;
     }
 
-    createList = async (listDto: CreateListDto, userId: number) => {
-        const args: any[] = [listDto.name, listDto.description, userId];
-        await this.dbHelper.callProcedure(Constants.procCreateList, args);
+    createList = async (listDto: CreateListDto, userId: number) : Promise<number> => {
+        const args: any[] = [listDto.name, listDto.description, userId, 1];
+        const rows = await this.dbHelper.callProcedureWithOutput(Constants.procCreateList, args);
+        return Number(rows[0].gp_list_id)
     }
 }

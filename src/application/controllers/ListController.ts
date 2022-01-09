@@ -28,9 +28,15 @@ export class ListController {
     post = async (request: express.Request, response: express.Response): Promise<any> => {
         try {
             const createListDto: CreateListDto = CreateListDtoSchema.parse(request.body);
-            await this.listValidator.checkIfListNameExists(createListDto.name, request.context.userId);
-            await this.createListUseCase.execute(createListDto, request.context.userId);
-            response.send(201);
+            let listId: number | undefined = undefined;
+
+            //return 409 conflict if it exists along with the Id.
+            listId = await this.listValidator.checkIfListNameExists(createListDto.name, request.context.userId);
+            if (listId)
+                response.status(409).send(listId);
+            
+            listId = await this.createListUseCase.execute(createListDto, request.context.userId);
+            response.status(201).send(listId);
         } catch (err: any) {
             this.logger.logError(err);
             response.send(500);

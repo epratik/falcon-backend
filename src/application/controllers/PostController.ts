@@ -32,12 +32,16 @@ export class PostController {
 			// const limit: number = request.query?.limit as unknown as number;	
 			const limit = await this.configManager.getContentLimit;
 			let tag: string | undefined = undefined;
+			let subTag: string | undefined = undefined;
 
 			const offset: number = request.query?.offset as unknown as number;
 			if (request.query && request.query.tag)
 				tag = request.query?.tag as unknown as string;
 
-			const result = await this.contentService.getTopContent(limit, offset, tag);
+			if (request.query && request.query.subTag)
+				subTag = request.query?.subTag as unknown as string;
+			
+			const result = await this.contentService.getTopContent(limit, offset, tag, subTag);
 			response.send(result);
 
 		} catch (err: any) {

@@ -13,12 +13,13 @@ export class PostRepository implements IPostRepository {
         
     }
 
-    getTopPosts = async (limit: number, offset: number, tag: string | undefined): Promise<ViewPostsDto[]> => {
+    getTopPosts = async (limit: number, offset: number, tag: string | undefined, subTag: string | undefined): Promise<ViewPostsDto[]> => {
 
         let posts: ViewPostsDto[] = [];
         const finalTag = (!tag || tag == '') ? null : tag;
+        const finalSubTag = (!subTag || subTag == '') ? null : subTag;
 
-        const args: any[] = [limit, offset, finalTag];
+        const args: any[] = [limit, offset, finalTag, finalSubTag];
        
         const result = await this.dbHelper.callFunction(Constants.fnGetTopContent, args);
           
@@ -77,6 +78,7 @@ export class PostRepository implements IPostRepository {
                 listId: listId,
                 postId: item["gp_post_id"],
                 tag: item["tag"],
+                subTag: item["sub_tag"],
                 url: item["url"],
                 urlDescription: item["url_description"],
                 likes: item["likes"]
