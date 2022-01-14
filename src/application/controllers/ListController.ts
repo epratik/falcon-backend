@@ -33,7 +33,7 @@ export class ListController {
             //return 409 conflict if it exists along with the Id.
             listId = await this.listValidator.checkIfListNameExists(createListDto.name, request.context.userId);
             if (listId)
-                response.status(409).send(listId);
+                response.status(409).send(listId.toString());
             
             listId = await this.createListUseCase.execute(createListDto, request.context.userId);
             response.status(201).send(listId);
