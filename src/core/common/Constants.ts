@@ -16,6 +16,7 @@ export abstract class Constants {
     static fnCheckIfListNameExists = "fnCheckIfListNameExists";
     static fnGetLists = "fnGetLists";
     static fnGetPosts = "fnGetPosts";
+    static procUpdateViews = "spUpdateViews";
     static procLike = "spLike"
     static procUnlike = "spUnlike"
     static procFollow = "spFollow"

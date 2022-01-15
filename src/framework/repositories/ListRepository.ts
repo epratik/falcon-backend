@@ -51,4 +51,9 @@ export class ListRepository implements IListRepository{
         const rows = await this.dbHelper.callProcedureWithOutput(Constants.procCreateList, args);
         return Number(rows[0].gp_list_id)
     }
+
+    updateViews = async (listId: number): Promise<void> => {
+        const args: any[] = [listId];
+        await this.dbHelper.callProcedure(Constants.procUpdateViews, args);
+    }
 }
