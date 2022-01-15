@@ -10,7 +10,7 @@ export class UserRouter implements IRouter  {
     }
 
     initializeRoutes(){
-        this.router.patch('/user', (req, res) => container.resolve(UserController).patch(req, res));
+        this.router.patch('/users', (req, res) => container.resolve(UserController).patch(req, res));
     }
 
 }
