@@ -35,6 +35,7 @@ import { UserController } from "./application/controllers/UserController";
 import { ListRouter } from "./application/routes/ListRouter";
 import { UserRouter } from "./application/routes/UserRouter";
 import { ContentService } from "./core/services/ContentService";
+import { UpdateViewsUseCase } from "./core/useCases/UpdateViewsUseCase";
 
 console.log('printing node_env')
 console.log(process.env.NODE_ENV)
@@ -73,6 +74,7 @@ container.register("IFollowUnfollowUseCase",FollowUnfollowUseCase);
 container.register("IGetListsUseCase",GetListsUseCase);
 container.register("IGetPostsUseCase", GetPostsUseCase);
 container.register("IPostDeactivateUseCase", PostDeactivateUseCase);
+container.register("IUpdateViewsUseCase", UpdateViewsUseCase);
 
 container.register("IUserContext", UserContext);
 container.register("IListValidator", ListValidator);
