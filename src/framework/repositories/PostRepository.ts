@@ -101,7 +101,7 @@ export class PostRepository implements IPostRepository {
 
     checkIfPostBelongsToUser = async (postId: number, userId: number): Promise<boolean> => {
         const args: any[] = [postId, userId];
-        const result = await this.dbHelper.callFunction(Constants.fnGetTopContent, args);
+        const result = await this.dbHelper.callFunction(Constants.fnCheckIfPostBelongsToUser, args);
         const item = result[0];
         return item[Object.keys(item)[0]] as boolean;
     }
