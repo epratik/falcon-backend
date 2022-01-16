@@ -12,7 +12,7 @@ export class CreatePostUseCase implements ICreatePostUseCase {
     constructor(
         @inject("IPostRepository") private postRepo: IPostRepository,
         @inject("IGetLinkPreviewUseCase") private linkPreview: IGetLinkPreviewUseCase,
-        @inject("IAWSHelper") private awsHelper: IAwsHelper,
+        @inject("IAwsHelper") private awsHelper: IAwsHelper,
         @inject("IHttpClient") private httpClient: IHttpClient,
         @inject("IConfigManager") private configManager: IConfigManager
     ) { }
