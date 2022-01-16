@@ -5,5 +5,6 @@ export type ServiceConfig = {
     localConnectionString: string,
     jumpServerSettings: string,
     jumpServerKey: string,
-    contentLimit: number
+    contentLimit: number,
+    enableAWSRekognition: boolean
 }

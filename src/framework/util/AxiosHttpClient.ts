@@ -5,6 +5,20 @@ import { IHttpClientRequestParameters } from "../../core/interfaces/framework/IH
 export class AxiosHttpClient implements IHttpClient {
   constructor() { }
 
+  getImageBuffer(parameters: IHttpClientRequestParameters): Promise<Buffer> {
+    return new Promise<Buffer>((resolve, reject) => {
+      axios.get(parameters.url, {
+        responseType: "arraybuffer",
+      })
+        .then((response: any) => {
+          resolve(Buffer.from(response.data, "base64"));
+        })
+        .catch((response: any) => {
+          reject(this.handleRejection(response));
+        });
+    })
+  }
+
   get<T>(parameters: IHttpClientRequestParameters): Promise<T> {
     let headers = {
       "Content-Type": "application/json",

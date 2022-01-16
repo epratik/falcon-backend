@@ -8,4 +8,5 @@ export interface IConfigManager {
 	getDuration: Promise<number>;
 	getLogLevel: Promise<string>;
 	getContentLimit: Promise<number>;
+	enableAWSRekognition: Promise<boolean>;
 }

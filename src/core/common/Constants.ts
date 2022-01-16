@@ -7,6 +7,7 @@ export abstract class Constants {
     static region = "app.region";
     static paramStoreAPIVersion = "2014-11-06";
     static secretStoreAPIVersion = "2017-10-17";
+    static rekognitionAPIVerion = "2016-06-27";
     static loggerName = "nodejsLogger";
     static apiPrefix = "api";
     static fnGetTopContent = "fnGetTopContent"

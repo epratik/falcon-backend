@@ -90,4 +90,12 @@ export class ConfigManager implements IConfigManager {
 			else return 25;
 		})();
 	}
+	
+	get enableAWSRekognition(): Promise<boolean> {
+		return (async () => {
+			const config = await this.getConfigFileFromCache();
+			if (config && config.enableAWSRekognition) return config.enableAWSRekognition;
+			else return true;
+		})();
+	}
 }

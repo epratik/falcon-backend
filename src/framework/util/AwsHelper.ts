@@ -113,4 +113,23 @@ export class AwsHelper implements IAwsHelper {
             throw err;
         }
     }
+
+    async checkExplicitContent(image: Buffer): Promise<boolean> {
+        const awsrek = new AWS.Rekognition({ apiVersion: Constants.rekognitionAPIVerion });
+        try {
+            const params: AWS.Rekognition.Types.DetectModerationLabelsRequest = {
+                Image: {
+                    Bytes: image
+                }
+            }
+            const resp = await awsrek.detectModerationLabels(params).promise();
+            if (resp.ModerationLabels && resp.ModerationLabels.length > 0)
+                return true;
+            else
+                return false;
+        }
+        catch (err) {
+            throw err;
+        }
+    }
 }
