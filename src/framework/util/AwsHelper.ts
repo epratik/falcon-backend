@@ -123,8 +123,7 @@ export class AwsHelper implements IAwsHelper {
                 }
             }
             const resp = await awsrek.detectModerationLabels(params).promise();
-            console.log('got rekognition response')
-            console.log(resp);
+            
             if (resp.ModerationLabels && resp.ModerationLabels.length > 0)
                 return true;
             else
