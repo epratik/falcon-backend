@@ -1,4 +1,5 @@
 import express from "express";
+import rateLimit from 'express-rate-limit';
 import http from "http";
 import "reflect-metadata";
 import dotenv from "dotenv";
@@ -96,6 +97,12 @@ const server: http.Server = http.createServer(app);
 const routes: Array<IRouter> = [];
 //modify response
 
+// Create the rate limit rule
+const apiRequestLimiter = rateLimit({
+    windowMs: 1 * 60 * 1000, // 1 minute
+    max: Number(process.env.REQUEST_PER_MINUTE) // limit each IP to 15 requests per windowMs
+})
+
 //Setup and initialize all routes
 routes.push(new PostRouter(router));
 routes.push(new ListRouter(router));
@@ -103,6 +110,7 @@ routes.push(new UserRouter(router));
 
 app.use(express.json());
 app.use(corsMiddleware.setCors);
+app.use(apiRequestLimiter);
 app.use(authMiddleware.authorize);
 app.use("/" + Constants.apiPrefix, router);
 routes.forEach((router: IRouter) => {
