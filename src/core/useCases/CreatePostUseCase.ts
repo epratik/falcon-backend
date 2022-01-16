@@ -18,13 +18,17 @@ export class CreatePostUseCase implements ICreatePostUseCase {
     ) { }
 
     execute = async (postDto: CreatePostDto): Promise<void> => {
-
+        console.log('inside create post')
         if (await this.configManager.enableAWSRekognition) {
             const preview = await this.linkPreview.execute(postDto.url);
-
+            console.log('preview')
+            console.log(preview);
             if (preview.images && preview.images.length > 0) {
                 
+                console.log('calling axios')
                 const buffer = await this.httpClient.getImageBuffer({ url: preview.images[0] });
+                console.log('buffer')
+                console.log(buffer)
                 if (await this.awsHelper.checkExplicitContent(buffer))
                     throw new Error('Explicit content detected');
             }
