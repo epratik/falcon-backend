@@ -1,5 +1,5 @@
 import { PostPatchType } from "../../dto/PostPatchDto";
 
 export interface ILikeUnlikeUseCase {
-    execute(postId: number, patchType: PostPatchType): Promise<void>
+    execute(postId: number, patchType: PostPatchType, userId: number): Promise<void>;
 }

@@ -88,9 +88,9 @@ export class PostRepository implements IPostRepository {
         return posts;
     }
 
-    like = async (postId: number): Promise<void> => {
+    like = async (postId: number, userId:number): Promise<void> => {
 
-        const args: any[] = [postId];
+        const args: any[] = [postId, userId];
         await this.dbHelper.callProcedure(Constants.procLike, args);
     }
 

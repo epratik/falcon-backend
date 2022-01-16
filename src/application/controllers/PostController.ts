@@ -88,7 +88,7 @@ export class PostController {
 
 			switch (postPatchDto.patchType) {
 				case PostPatchTypeSchema.enum.Like || PostPatchTypeSchema.enum.Unlike: {
-					await this.likeUnlikeUseCase.execute(postPatchDto.requestBody.postId, postPatchDto.patchType)
+					await this.likeUnlikeUseCase.execute(postPatchDto.requestBody.postId, postPatchDto.patchType, request.context.userId);
 					break;
 				}
 				case PostPatchTypeSchema.enum.Deactivate: {

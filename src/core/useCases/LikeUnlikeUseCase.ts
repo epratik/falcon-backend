@@ -9,9 +9,9 @@ export class LikeUnlikeUseCase implements ILikeUnlikeUseCase {
         @inject("IPostRepository") private postRepo: IPostRepository
     ) { }
 
-    execute = async (postId: number, patchType: PostPatchType): Promise<void> => {
+    execute = async (postId: number, patchType: PostPatchType, userId: number): Promise<void> => {
         if (patchType === PostPatchTypeSchema.enum.Like)
-            await this.postRepo.like(postId);
+            await this.postRepo.like(postId, userId);
         else
             await this.postRepo.unlike(postId);           
     }
