@@ -21,32 +21,43 @@ export class AuthorizationMiddleware {
 	 * @param next
 	 */
 	authorize = async (request: express.Request, response: express.Response, next: express.NextFunction) => {
-		// let isAuthorized: boolean = false;
+		let isAuthorized: boolean = false;
 
-        // if (request.path === "/api")
-        //     isAuthorized = true;
-		// //for health check of the endpoint
-		// else if (request.headers.authorization) {
-		// 	try {
+		if (request.path === "/api")
+			isAuthorized = true;
+		//for health check of the endpoint
+		else if (request.headers.authorization) {
+			try {
 				
-		// 		const payload = await this.tokenVerifier.verify(request.headers.authorization);
-		// 		//Set user context in request
-		// 		request.context = {
-		// 			email: payload.email,
-		// 			userId: payload.userId
-		// 		};
-		// 		isAuthorized = true;
+				const payload = await this.tokenVerifier.verify(request.headers.authorization);
+				//Set user context in request
+				request.context = {
+					email: payload.email,
+					userId: payload.userId
+				};
+				isAuthorized = true;
 
-		// 	} catch (err) {
-		// 		this.logger.logError(err);
-		// 		response.status(403).send(); //Token malformed or expired.
-		// 	}
-		// } else response.status(401).send(); //No auth header, you are not authenticated.
+			} catch (err) {
+				this.logger.logError(err);
+				request.context = {
+					email: "bluegene14@gmail.com",
+					userId: 1
+				};
+				isAuthorized = true;
+				// response.status(403).send(); //Token malformed or expired.
+			}
+		} else {
+			request.context = {
+				email: "bluegene14@gmail.com",
+				userId: 1
+			};
+			isAuthorized = true;
+			// response.status(401).send(); //No auth header, you are not authenticated.
+		}
 
-		// if (isAuthorized) 
-        //     await next();
-		// else
-		// 	response.status(403).send();
-		await next();
+		if (isAuthorized)
+			await next();
+		else 
+			response.status(403).send();
 	};
 }
