@@ -16,12 +16,16 @@ export class UserController{
     patch = async (request: express.Request, response: express.Response): Promise<any> => {
         try {
             const body = request.body as UserPatchDto;
+            console.log(body)
             switch (body.patchType) {
                 case UserPatchType.Follow || UserPatchType.Unfollow: {
-                    this.followUnfollowUseCase.execute(request.context.userId, body.requestBody.userToFollowUnfollow, body.patchType)
+                    console.log('inside first case')
+                    console.log(body.patchType)
+                    await this.followUnfollowUseCase.execute(request.context.userId, body.requestBody.userToFollowUnfollow, body.patchType)
                     break;
                 }
                 default: {
+                    console.log('inside break');
                     break;
                 }
             }
