@@ -3,7 +3,7 @@ import express from "express";
 import { ILogger } from "../../core/interfaces/framework/ILogger";
 import { IConfigManager } from "../../core/interfaces/common/IConfigManager";
 import { IFollowUnfollowUseCase } from "../../core/interfaces/useCases/IFollowUnfollowUseCase";
-import { UserPatchDto, UserPatchType } from "../../core/dto/UserPatchDto";
+import { UserPatchDto, UserPatchDtoSchema, UserPatchType, UserPatchTypeSchema } from "../../core/dto/UserPatchDto";
 
 @injectable()
 export class UserController{
@@ -15,13 +15,11 @@ export class UserController{
 
     patch = async (request: express.Request, response: express.Response): Promise<any> => {
         try {
-            const body = request.body as UserPatchDto;
-            console.log(body)
-            switch (body.patchType) {
-                case UserPatchType.Follow || UserPatchType.Unfollow: {
-                    console.log('inside first case')
-                    console.log(body.patchType)
-                    await this.followUnfollowUseCase.execute(request.context.userId, body.requestBody.userToFollowUnfollow, body.patchType)
+            const userPatchDto: UserPatchDto = UserPatchDtoSchema.parse(request.body);
+
+            switch (userPatchDto.patchType) {
+                case UserPatchTypeSchema.enum.Follow || UserPatchTypeSchema.enum.Unfollow: {
+                    await this.followUnfollowUseCase.execute(request.context.userId, userPatchDto.requestBody.userToFollowUnfollow, userPatchDto.patchType)
                     break;
                 }
                 default: {

@@ -1,14 +1,18 @@
 
-export enum UserPatchType {
-    Follow = "Follow",
-    Unfollow = "Unfollow"
-};
+import * as z from "zod";
 
-export type UserPatchDto = {
-    patchType: UserPatchType,
-    requestBody: FollowUnfollow
-};
+export const UserPatchTypeSchema = z.enum(['Follow', 'Unfollow']);
 
-export type FollowUnfollow = {
-    userToFollowUnfollow: number
-}
+export const FollowUnfollowSchema = z.object({
+    userToFollowUnfollow:z.number()
+}) 
+
+export const UserPatchDtoSchema = z
+    .object({
+        patchType: UserPatchTypeSchema,
+        requestBody: FollowUnfollowSchema
+    });
+
+export type UserPatchDto = z.infer<typeof UserPatchDtoSchema>
+export type UserPatchType = z.infer<typeof UserPatchTypeSchema>
+
