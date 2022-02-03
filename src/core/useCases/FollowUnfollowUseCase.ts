@@ -1,5 +1,5 @@
 import { inject, injectable } from "tsyringe";
-import { UserPatchType } from "../dto/UserPatchDto";
+import { UserPatchType, UserPatchTypeSchema } from "../dto/UserPatchDto";
 import { IUserRepository } from "../interfaces/repositories/IUserRepository";
 
 @injectable()
@@ -9,7 +9,7 @@ export class FollowUnfollowUseCase {
     }
 
     execute = async (userId: number, userIdToFollowUnfollow: number, patchType: UserPatchType): Promise<void> => {
-        if (patchType === UserPatchType.Follow)
+        if (patchType === UserPatchTypeSchema.enum.Follow)
             await this.userRepo.follow(userId, userIdToFollowUnfollow);
         else
             await this.userRepo.unfollow(userId, userIdToFollowUnfollow);
