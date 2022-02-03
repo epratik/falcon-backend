@@ -18,7 +18,11 @@ export class UserController{
             const userPatchDto: UserPatchDto = UserPatchDtoSchema.parse(request.body);
 
             switch (userPatchDto.patchType) {
-                case UserPatchTypeSchema.enum.Follow || UserPatchTypeSchema.enum.Unfollow: {
+                case UserPatchTypeSchema.enum.Follow : {
+                    await this.followUnfollowUseCase.execute(request.context.userId, userPatchDto.requestBody.userToFollowUnfollow, userPatchDto.patchType)
+                    break;
+                }
+                case UserPatchTypeSchema.enum.Unfollow: {
                     await this.followUnfollowUseCase.execute(request.context.userId, userPatchDto.requestBody.userToFollowUnfollow, userPatchDto.patchType)
                     break;
                 }
