@@ -41,7 +41,7 @@ export class PostController {
 			if (request.query && request.query.subTag)
 				subTag = request.query?.subTag as unknown as string;
 			
-			const result = await this.contentService.getTopContent(limit, offset, tag, subTag);
+			const result = await this.contentService.getTopContent(limit, offset, tag, subTag, request.context.userId);
 			response.send(result);
 
 		} catch (err: any) {

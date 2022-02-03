@@ -7,5 +7,6 @@ export type ViewPostsDto = {
     userName: string,
     date: string,
     listName: string,
-    userId: number
+    userId: number,
+    isFollowing: boolean
 }

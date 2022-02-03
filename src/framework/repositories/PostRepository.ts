@@ -13,13 +13,13 @@ export class PostRepository implements IPostRepository {
         
     }
 
-    getTopPosts = async (limit: number, offset: number, tag: string | undefined, subTag: string | undefined): Promise<ViewPostsDto[]> => {
+    getTopPosts = async (limit: number, offset: number, tag: string | undefined, subTag: string | undefined, userId:number): Promise<ViewPostsDto[]> => {
 
         let posts: ViewPostsDto[] = [];
         const finalTag = (!tag || tag == '') ? null : tag;
         const finalSubTag = (!subTag || subTag == '') ? null : subTag;
 
-        const args: any[] = [limit, offset, finalTag, finalSubTag];
+        const args: any[] = [limit, offset, finalTag, finalSubTag, userId];
        
         const result = await this.dbHelper.callFunction(Constants.fnGetTopContent, args);
           
@@ -33,7 +33,8 @@ export class PostRepository implements IPostRepository {
                 userName: item["user_name"],
                 date: item["utc_date"],
                 listName: item["list_name"],
-                userId: item["gp_user_id"]
+                userId: item["gp_user_id"],
+                isFollowing: item["is_following"]
             })
         });
 
@@ -58,7 +59,8 @@ export class PostRepository implements IPostRepository {
                 userName: item["user_name"],
                 date: item["utc_date"],
                 listName: item["list_name"],
-                userId: item["gp_user_id"]
+                userId: item["gp_user_id"],
+                isFollowing: item["is_following"]
             })
         });
 
