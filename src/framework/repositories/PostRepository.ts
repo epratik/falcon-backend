@@ -94,8 +94,8 @@ export class PostRepository implements IPostRepository {
         await this.dbHelper.callProcedure(Constants.procLike, args);
     }
 
-    unlike = async (postId: number): Promise<void> => {
-        const args: any[] = [postId];
+    unlike = async (postId: number, userId:number): Promise<void> => {
+        const args: any[] = [postId, userId];
         await this.dbHelper.callProcedure(Constants.procUnlike, args);
     }
 

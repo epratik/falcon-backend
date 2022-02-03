@@ -13,6 +13,6 @@ export class LikeUnlikeUseCase implements ILikeUnlikeUseCase {
         if (patchType === PostPatchTypeSchema.enum.Like)
             await this.postRepo.like(postId, userId);
         else
-            await this.postRepo.unlike(postId);           
+            await this.postRepo.unlike(postId, userId); 
     }
 }

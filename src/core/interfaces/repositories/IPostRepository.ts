@@ -7,7 +7,7 @@ export interface IPostRepository {
     getFollowedPosts(limit: number, offset: number, userId: number): Promise<ViewPostsDto[]>;
     getPosts(listId: number): Promise<Post[]>;
     like(postId: number, userId: number): Promise<void>;
-    unlike(postId: number): Promise<void>;
+    unlike(postId: number, userId:number): Promise<void>;
     checkIfPostBelongsToUser(postId: number, userId: number): Promise<boolean>;
     createPost(postDto: CreatePostDto): Promise<void>;
     deactivatePost(postId: number): Promise<void>;
