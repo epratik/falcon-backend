@@ -87,7 +87,11 @@ export class PostController {
 			const postPatchDto: PostPatchDto = PostPatchDtoSchema.parse(request.body);
 
 			switch (postPatchDto.patchType) {
-				case PostPatchTypeSchema.enum.Like || PostPatchTypeSchema.enum.Unlike: {
+				case PostPatchTypeSchema.enum.Like : {
+					await this.likeUnlikeUseCase.execute(postPatchDto.requestBody.postId, postPatchDto.patchType, request.context.userId);
+					break;
+				}
+				case PostPatchTypeSchema.enum.Unlike: {
 					await this.likeUnlikeUseCase.execute(postPatchDto.requestBody.postId, postPatchDto.patchType, request.context.userId);
 					break;
 				}
