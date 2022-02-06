@@ -24,7 +24,7 @@
 #    See the documentation for each action used below for the recommended IAM policies for this IAM user,
 #    and best practices on handling the access key credentials.
 
-name: Deploy to Amazon ECS
+name: Deploy to Amazon ECS - PROD
 
 on:
   push:
@@ -36,7 +36,7 @@ env:
   ECR_REPOSITORY: public.ecr.aws/o6c6k1c5/gp-prod-ecr-public           # set this to your Amazon ECR repository name
   ECS_SERVICE: gp-prod-ecs-service                 # set this to your Amazon ECS service name
   ECS_CLUSTER: gp-prod-ecs-cluster                 # set this to your Amazon ECS cluster name
-  ECS_TASK_DEFINITION: aws-task-definition.json # set this to the path to your Amazon ECS task definition
+  ECS_TASK_DEFINITION: taskdef_prod/aws-task-definition.json # set this to the path to your Amazon ECS task definition
                                                # file, e.g. .aws/task-definition.json
   CONTAINER_NAME: gp-prod-ecs-container           # set this to the name of the container in the
                                                # containerDefinitions section of your task definition
