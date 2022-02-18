@@ -63,7 +63,7 @@
             "curl -f http://127.0.0.1:8080/api || exit 1"
           ],
           "timeout": 5,
-          "interval": 5,
+          "interval": 3600,
           "startPeriod": null
         },
         "essential": true,
