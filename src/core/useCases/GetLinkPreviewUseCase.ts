@@ -1,6 +1,6 @@
 import { injectable } from "tsyringe";
 import { Post } from "../model/Post";
-import { getLinkPreview } from "link-preview-js";
+const linkPreviewGenerator = require("link-preview-generator");
 import { Preview } from "../model/Preview";
 import { IGetLinkPreviewUseCase } from "../interfaces/useCases/IGetLinkPreviewUseCase";
 
@@ -16,14 +16,16 @@ export class GetLinkPreviewUseCase implements IGetLinkPreviewUseCase {
         let images: string[] = [];
         let favicons: string[] = [];
  
-        const linkPreview = await getLinkPreview(url);
+        const linkPreview = await linkPreviewGenerator(url, ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage']);
+
+        console.log(linkPreview);
 
         if ("title" in linkPreview)
             title = linkPreview.title;
         if ("siteName" in linkPreview)
             siteName = linkPreview.siteName;
         if ("images" in linkPreview)
-            images = linkPreview.images;
+            images = [linkPreview.img];
         if ("favicons" in linkPreview)
             favicons = linkPreview.favicons;
             

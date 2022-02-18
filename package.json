@@ -47,6 +47,7 @@
 		"jwk-to-pem": "^2.0.5",
 		"jwt-decode": "^3.1.2",
 		"knex": "^0.21.1",
+		"link-preview-generator": "^1.0.7",
 		"link-preview-js": "^2.1.8",
 		"memory-cache": "^0.2.0",
 		"moment": "^2.29.1",
