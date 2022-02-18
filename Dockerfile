@@ -45,7 +45,7 @@ RUN npm init -y &&  \
 USER pptruser
 CMD ["google-chrome-stable"]
 
-USER su
+USER root
 WORKDIR /app
 COPY --from=stage1 ./app/dist ./dist
 #NOT COPIED .ENV FILE - ENVIROMENT VAR NEEDS TO BE PASSED IN DOCKER RUN COMMAND
