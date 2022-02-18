@@ -16,6 +16,7 @@ export class GetLinkPreviewUseCase implements IGetLinkPreviewUseCase {
         let images: string[] = [];
         let favicons: string[] = [];
  
+        console.log('called link preview..')
         const linkPreview = await linkPreviewGenerator(url, ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage']);
 
         console.log(linkPreview);
