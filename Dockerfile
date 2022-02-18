@@ -16,7 +16,6 @@ RUN npm run tsc
 #Stage2- copy compiled source from stage 1 and install only prod dependencies.
 FROM node:14-slim AS stage2
 ENV NODE_ENV local
-WORKDIR /app
 # ADD *.crt /usr/local/share/ca-certificates/
 # RUN apk update && apk add ca-certificates && rm -rf /var/cache/apk/*
 
@@ -46,6 +45,7 @@ RUN npm init -y &&  \
 USER pptruser
 CMD ["google-chrome-stable"]
 
+WORKDIR /app
 COPY --from=stage1 ./app/dist ./dist
 #NOT COPIED .ENV FILE - ENVIROMENT VAR NEEDS TO BE PASSED IN DOCKER RUN COMMAND
 
