@@ -32,7 +32,7 @@
           },
           {
             "name": "NODE_ENV",
-            "value": "local"
+            "value": "prod"
           },
           {
             "name": "REQUEST_PER_MINUTE",
@@ -86,7 +86,7 @@
       "EXTERNAL",
       "EC2"
     ],
-    "taskDefinitionArn": "arn:aws:ecs:us-west-2:075760899250:task-definition/gp-prod-ecs-taskdefinition:2",
+    "taskDefinitionArn": "arn:aws:ecs:us-west-2:075760899250:task-definition/gp-prod-ecs-taskdefinition:5",
     "family": "gp-prod-ecs-taskdefinition",
     "requiresAttributes": [
       {
