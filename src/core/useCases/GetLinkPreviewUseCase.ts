@@ -11,20 +11,18 @@ export class GetLinkPreviewUseCase implements IGetLinkPreviewUseCase {
 
     constructor(
     ) { 
-         
-    }
-
-    init = async () => {
-        this.browser = await puppeteer.launch({headless: true, args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage'] });
+        console.log('creating browser instance...')
+        puppeteer.launch({ headless: true, args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage'] }).then((obj: any) => {
+            this.browser = obj;
+        });
         puppeteer.use(pluginStealth());
+        console.log('browser instance ready...')
     }
 
     execute = async (url: string): Promise<Preview> => {
 
         try {
-            if (this.browser == undefined)
-                await this.init();
-        
+
             let title = "";
             let siteName: string | undefined = "";
             let images: string[] = [];
