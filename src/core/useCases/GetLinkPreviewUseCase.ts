@@ -26,7 +26,8 @@ export class GetLinkPreviewUseCase implements IGetLinkPreviewUseCase {
         console.log('called link preview..')
 
         console.log("setup puppeteer")
-        const browser = await puppeteer.launch({ args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage'] });
+        const browser = await puppeteer.launch({headless: true, args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage'] });
+        puppeteer.use(pluginStealth());
         const page = await browser.newPage();
         page.setUserAgent("facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)");
       
@@ -35,7 +36,6 @@ export class GetLinkPreviewUseCase implements IGetLinkPreviewUseCase {
         await page.exposeFunction("urlImageIsAccessible", true);
 
         console.log("setup puppeteer completed")
-
         console.log(await this.getImg(page, url));
         await browser.close();
         console.log('image retrieved.')
