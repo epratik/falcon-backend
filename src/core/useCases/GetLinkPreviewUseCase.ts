@@ -40,7 +40,8 @@ export class GetLinkPreviewUseCase implements IGetLinkPreviewUseCase {
         await browser.close();
         console.log('image retrieved.')
         
-        const linkPreview = await linkPreviewGenerator(url, ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage']);
+        //const linkPreview = await linkPreviewGenerator(url, ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage']);
+        const linkPreview:any = {};
         console.log(linkPreview);
 
         if ("title" in linkPreview)
