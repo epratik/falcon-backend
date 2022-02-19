@@ -61,12 +61,12 @@ container.registerSingleton("ILogger", WinstonLogger);
 container.registerSingleton("IPostRepository", PostRepository);
 container.registerSingleton("IUserRepository", UserRepository);
 container.registerSingleton("IListRepository", ListRepository);
+container.registerSingleton("IGetLinkPreviewUseCase", GetLinkPreviewUseCase);
 
 container.register("PostController", PostController);
 container.register("ListController", ListController);
 container.register("UserController", UserController);
 
-container.register("IGetLinkPreviewUseCase", GetLinkPreviewUseCase);
 container.register("IContentService", ContentService);
 container.register("ILikeUnlikeUseCase", LikeUnlikeUseCase);
 container.register("ICreateListUseCase", CreateListUseCase);

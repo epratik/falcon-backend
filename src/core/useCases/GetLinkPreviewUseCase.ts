@@ -1,85 +1,73 @@
 import { injectable } from "tsyringe";
-import { Post } from "../model/Post";
-const linkPreviewGenerator = require("link-preview-generator");
 import { Preview } from "../model/Preview";
 import { IGetLinkPreviewUseCase } from "../interfaces/useCases/IGetLinkPreviewUseCase";
 
 const puppeteer = require("puppeteer-extra");
 const pluginStealth = require("puppeteer-extra-plugin-stealth");
-const util = require("util");
-const request = util.promisify(require("request"));
-const getUrls = require("get-urls");
-const isBase64 = require("is-base64");
-
 
 @injectable()
 export class GetLinkPreviewUseCase implements IGetLinkPreviewUseCase {
+    browser: any = undefined;
+
     constructor(
-    ) { }
+    ) { 
+         
+    }
+
+    init = async () => {
+        this.browser = await puppeteer.launch({headless: true, args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage'] });
+        puppeteer.use(pluginStealth());
+    }
 
     execute = async (url: string): Promise<Preview> => {
-        let title = "";
-        let siteName: string | undefined = "";
-        let images: string[] = [];
-        let favicons: string[] = [];
- 
-        console.log('called link preview..')
 
-        console.log("setup puppeteer")
-        const browser = await puppeteer.launch({headless: true, args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage'] });
-        puppeteer.use(pluginStealth());
-
-        let page = await browser.newPage();
-        page.setUserAgent("facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)");
-        await page.goto(url);
-        console.log('wait for meta......');
-        await page.waitForSelector('meta');
-        console.log('meta available');
-        let imgurl = await this.getImg(page, url);
-        console.log(imgurl);
-        await page.close();
-
-        page = await browser.newPage();
-        page.setUserAgent("facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)");
-        await page.goto(url);
-        console.log('wait for meta......');
-        await page.waitForSelector('meta');
-        console.log('meta available');
-        imgurl = await this.getImg(page, url);
-        console.log(imgurl);
-        await page.close();
-
-        await browser.close();
-        console.log('image retrieved.')
+        try {
+            if (this.browser == undefined)
+                await this.init();
         
-        //const linkPreview = await linkPreviewGenerator(url, ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage']);
-        const linkPreview:any = {};
-        console.log(linkPreview);
+            let title = "";
+            let siteName: string | undefined = "";
+            let images: string[] = [];
+            let favicons: string[] = [];
 
-        if ("title" in linkPreview)
-            title = linkPreview.title;
-        if ("siteName" in linkPreview)
-            siteName = linkPreview.siteName;
-        if ("img" in linkPreview)
-            images = [linkPreview.img];
-        if ("favicons" in linkPreview)
-            favicons = linkPreview.favicons;
+            const page = await this.browser.newPage();
+            page.setUserAgent("facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)");
+            await page.goto(url);
+            await page.waitForSelector('meta');
+            let imgurl = await this.getImg(page, url);
+            await page.close();
+
+            const linkPreview: any = {};
+            console.log(linkPreview);
+
+            if ("title" in linkPreview)
+                title = linkPreview.title;
+            if ("siteName" in linkPreview)
+                siteName = linkPreview.siteName;
+            if ("img" in linkPreview)
+                images = [imgurl];
+            if ("favicons" in linkPreview)
+                favicons = linkPreview.favicons;
             
-        const preview: Preview = {
-            title: title,
-            siteName: siteName,
-            images: images
-        }
+            const preview: Preview = {
+                title: title,
+                siteName: siteName,
+                images: images
+            }
 
-        return preview;
+            return preview;
+        }
+        catch (err) {
+            if (this.browser)
+                await this.browser.close();
+            throw err;
+        }
     }
 
     getImg = async (page: any, uri: any) => {
 
         const img = await page.evaluate(async () => {
             const metas = document.getElementsByTagName('meta');
-            console.log('meta tags print ***')
-            console.log(metas);
             for (let i = 0; i < metas.length; i++) {
                 if (metas[i].getAttribute('property') == 'og:image') {
                     return metas[i].getAttribute('content');
