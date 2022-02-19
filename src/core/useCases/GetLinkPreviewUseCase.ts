@@ -34,25 +34,23 @@ export class GetLinkPreviewUseCase implements IGetLinkPreviewUseCase {
             page.setUserAgent("facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)");
             await page.goto(url);
             await page.waitForSelector('meta');
-            let imgurl = await this.getImg(page, url);
+            let imgurl = await this.getImg(page, url);            
             await page.close();
 
-            const linkPreview: any = {};
-            console.log(linkPreview);
-
-            if ("title" in linkPreview)
-                title = linkPreview.title;
-            if ("siteName" in linkPreview)
-                siteName = linkPreview.siteName;
-            if ("img" in linkPreview)
-                images = [imgurl];
-            if ("favicons" in linkPreview)
-                favicons = linkPreview.favicons;
+            // const linkPreview: any = {};
+            // if ("title" in linkPreview)
+            //     title = linkPreview.title;
+            // if ("siteName" in linkPreview)
+            //     siteName = linkPreview.siteName;
+            // if ("img" in linkPreview)
+            //     images = [imgurl];
+            // if ("favicons" in linkPreview)
+            //     favicons = linkPreview.favicons;
             
             const preview: Preview = {
                 title: title,
                 siteName: siteName,
-                images: images
+                images: [imgurl]
             }
 
             return preview;
