@@ -28,20 +28,27 @@ export class GetLinkPreviewUseCase implements IGetLinkPreviewUseCase {
         console.log("setup puppeteer")
         const browser = await puppeteer.launch({headless: true, args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage'] });
         puppeteer.use(pluginStealth());
-        const page = await browser.newPage();
-        page.on('console', (msg:any) => {
-            for (let i = 0; i < msg.args.length; ++i)
-              console.log(`${i}: ${msg.args[i]}`);
-        });
+
+        let page = await browser.newPage();
         page.setUserAgent("facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)");
-      
         await page.goto(url);
         console.log('wait for meta......');
         await page.waitForSelector('meta');
         console.log('meta available');
-        const imgurl = await this.getImg(page, url);
+        let imgurl = await this.getImg(page, url);
         console.log(imgurl);
         await page.close();
+
+        page = await browser.newPage();
+        page.setUserAgent("facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)");
+        await page.goto(url);
+        console.log('wait for meta......');
+        await page.waitForSelector('meta');
+        console.log('meta available');
+        imgurl = await this.getImg(page, url);
+        console.log(imgurl);
+        await page.close();
+
         await browser.close();
         console.log('image retrieved.')
         
