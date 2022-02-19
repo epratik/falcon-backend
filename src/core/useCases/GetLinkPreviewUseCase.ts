@@ -26,7 +26,7 @@ export class GetLinkPreviewUseCase implements IGetLinkPreviewUseCase {
         console.log('called link preview..')
 
         console.log("setup puppeteer")
-        const browser = await puppeteer.launch(['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage']);
+        const browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage']});
         const page = await browser.newPage();
         page.setUserAgent("facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)");
       
