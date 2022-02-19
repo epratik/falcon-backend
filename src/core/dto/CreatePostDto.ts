@@ -8,7 +8,8 @@ export const CreatePostDtoSchema = z
         subTag: z.string(),
         url: z.string().url(),
         urlDescription: z.string(),
-        listId: z.number()
+        listId: z.number(),
+        imageUrl: z.string().optional().nullable().default(null)
     });
     
 export type CreatePostDto = z.infer<typeof CreatePostDtoSchema>;

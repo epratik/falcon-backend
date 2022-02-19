@@ -21,19 +21,27 @@ export class ContentService implements IContentService{
         
         const posts = await this.postRepo.getTopPosts(limit, offset, tag, subTag, userId);
         await Promise.all(posts.map(async (item) => {
-            const preview = await this.getLinkPreviewUseCase.execute(item.url);
+            // const preview = await this.getLinkPreviewUseCase.execute(item.url);
             
             if (topContent && topContent.content) {
                 topContent.content.push({
                     post: item,
-                    preview: preview
+                    preview: {
+                        title: undefined,
+                        siteName: undefined,
+                        images: item.imageUrl ? [item.imageUrl] : undefined
+                    }
                 })
             } else {
                 topContent = {
                     content: [
                         {
                             post: item,
-                            preview: preview
+                            preview: {
+                                title: undefined,
+                                siteName: undefined,
+                                images: item.imageUrl ? [item.imageUrl] : undefined
+                            }
                         }
                     ]
                 }
@@ -56,14 +64,22 @@ export class ContentService implements IContentService{
             if (followedContent && followedContent.content) {
                 followedContent.content.push({
                     post: item,
-                    preview: preview
+                    preview: {
+                        title: undefined,
+                        siteName: undefined,
+                        images: item.imageUrl ? [item.imageUrl] : undefined
+                    }
                 })
             } else {
                 followedContent = {
                     content: [
                         {
                             post: item,
-                            preview: preview
+                            preview: {
+                                title: undefined,
+                                siteName: undefined,
+                                images: item.imageUrl ? [item.imageUrl] : undefined
+                            }
                         }
                     ]
                 }

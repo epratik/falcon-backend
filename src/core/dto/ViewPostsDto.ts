@@ -8,5 +8,6 @@ export type ViewPostsDto = {
     date: string,
     listName: string,
     userId: number,
-    isFollowing: boolean
+    isFollowing: boolean,
+    imageUrl: string | null | undefined
 }

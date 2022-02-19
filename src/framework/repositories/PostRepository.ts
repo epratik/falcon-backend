@@ -34,7 +34,8 @@ export class PostRepository implements IPostRepository {
                 date: item["utc_date"],
                 listName: item["list_name"],
                 userId: item["gp_user_id"],
-                isFollowing: item["is_following"]
+                isFollowing: item["is_following"],
+                imageUrl: item["image_url"]
             })
         });
 
@@ -60,7 +61,8 @@ export class PostRepository implements IPostRepository {
                 date: item["utc_date"],
                 listName: item["list_name"],
                 userId: item["gp_user_id"],
-                isFollowing: item["is_following"]
+                isFollowing: item["is_following"],
+                imageUrl: item["image_url"]
             })
         });
 
@@ -110,7 +112,7 @@ export class PostRepository implements IPostRepository {
 
     createPost = async (postDto: CreatePostDto) => {
         const subTag = postDto.subTag == "" ? null : postDto.subTag;
-        const args: any[] = [postDto.tag, subTag, postDto.url, postDto.urlDescription, postDto.listId];
+        const args: any[] = [postDto.tag, subTag, postDto.url, postDto.urlDescription, postDto.listId, postDto.imageUrl];
         await this.dbHelper.callProcedure(Constants.procCreatePost, args);
     }
 
