@@ -26,7 +26,7 @@ export class GetLinkPreviewUseCase implements IGetLinkPreviewUseCase {
         console.log('called link preview..')
 
         console.log("setup puppeteer")
-        const browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage']});
+        const browser = await puppeteer.launch({ args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage'] });
         const page = await browser.newPage();
         page.setUserAgent("facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)");
       
@@ -47,7 +47,7 @@ export class GetLinkPreviewUseCase implements IGetLinkPreviewUseCase {
             title = linkPreview.title;
         if ("siteName" in linkPreview)
             siteName = linkPreview.siteName;
-        if ("images" in linkPreview)
+        if ("img" in linkPreview)
             images = [linkPreview.img];
         if ("favicons" in linkPreview)
             favicons = linkPreview.favicons;
@@ -61,11 +61,24 @@ export class GetLinkPreviewUseCase implements IGetLinkPreviewUseCase {
         return preview;
     }
 
-    getImg = async (page:any, uri:any) => {
+    getImg = async (page: any, uri: any) => {
         const img = await page.evaluate(async () => {
-            const ogImg = document.querySelector('meta[property="og:image"]');
-            console.log(ogImg)
+            //const ogImg = document.querySelector('meta[property="og:image"]');
+            const img = this.getMeta('og:image')
+            console.log(img)
         });
         return img;
     };
+
+    getMeta = async (metaName: any)=> {
+        const metas = document.getElementsByTagName('meta');
+      
+        for (let i = 0; i < metas.length; i++) {
+            if (metas[i].getAttribute('property') === metaName) {
+                return metas[i].getAttribute('content');
+            }
+        }
+      
+        return '';
+    }
 }
