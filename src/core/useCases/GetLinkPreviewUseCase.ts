@@ -29,14 +29,19 @@ export class GetLinkPreviewUseCase implements IGetLinkPreviewUseCase {
         const browser = await puppeteer.launch({headless: true, args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage'] });
         puppeteer.use(pluginStealth());
         const page = await browser.newPage();
+        page.on('console', (msg:any) => {
+            for (let i = 0; i < msg.args.length; ++i)
+              console.log(`${i}: ${msg.args[i]}`);
+        });
         page.setUserAgent("facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)");
       
         await page.goto(url);
-        await page.exposeFunction("request", request);
-        await page.exposeFunction("urlImageIsAccessible", true);
-
-        console.log("setup puppeteer completed")
-        console.log(await this.getImg(page, url));
+        console.log('wait for meta......');
+        await page.waitForSelector('meta');
+        console.log('meta available');
+        const imgurl = await this.getImg(page, url);
+        console.log(imgurl);
+        await page.close();
         await browser.close();
         console.log('image retrieved.')
         
@@ -63,8 +68,10 @@ export class GetLinkPreviewUseCase implements IGetLinkPreviewUseCase {
     }
 
     getImg = async (page: any, uri: any) => {
+
         const img = await page.evaluate(async () => {
             const metas = document.getElementsByTagName('meta');
+            console.log('meta tags print ***')
             console.log(metas);
             for (let i = 0; i < metas.length; i++) {
                 if (metas[i].getAttribute('property') == 'og:image') {
