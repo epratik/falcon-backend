@@ -64,8 +64,9 @@ export class GetLinkPreviewUseCase implements IGetLinkPreviewUseCase {
     getImg = async (page: any, uri: any) => {
         const img = await page.evaluate(async () => {
             const metas = document.getElementsByTagName('meta');
+            console.log(metas);
             for (let i = 0; i < metas.length; i++) {
-                if (metas[i].getAttribute('property') === 'og:image') {
+                if (metas[i].getAttribute('property') == 'og:image') {
                     return metas[i].getAttribute('content');
                 }
             }
