@@ -12,6 +12,7 @@ export abstract class Constants {
     static apiPrefix = "api";
     static fnGetTopContent = "fnGetTopContent"
     static fnGetFollowedContent = "fnGetFollowedContent"
+    static fnGetSharedListContent = "fnGetSharedListContent"
     static fnCheckIfPostBelongsToUser = "fnCheckIfPostBelongsToUser";
     static fnCheckIfListExists = "fnCheckIfListExists";
     static fnCheckIfListNameExists = "fnCheckIfListNameExists";

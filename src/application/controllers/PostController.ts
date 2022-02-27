@@ -33,6 +33,7 @@ export class PostController {
 			const limit = await this.configManager.getContentLimit;
 			let tag: string | undefined = undefined;
 			let subTag: string | undefined = undefined;
+			let userId: number | null = null;
 
 			const offset: number = request.query?.offset as unknown as number;
 			if (request.query && request.query.tag)
@@ -41,7 +42,10 @@ export class PostController {
 			if (request.query && request.query.subTag)
 				subTag = request.query?.subTag as unknown as string;
 			
-			const result = await this.contentService.getTopContent(limit, offset, tag, subTag, request.context.userId);
+			if (request.context && request.context.userId)
+				userId = request.context.userId;
+			
+			const result = await this.contentService.getTopContent(limit, offset, tag, subTag, userId);
 			response.send(result);
 
 		} catch (err: any) {
@@ -74,6 +78,23 @@ export class PostController {
 			
 			const listId: number = request.params?.id as unknown as number;
 			const result = await this.getPostUseCase.execute(listId);
+			response.send(result);
+
+		} catch (err: any) {
+			this.logger.logError(err);
+			response.send(500);
+		}
+	};
+
+	getPostsForASharedList = async (request: express.Request, response: express.Response): Promise<any> => {
+		try {
+			// const limit: number = request.query?.limit as unknown as number;	
+			const limit = await this.configManager.getContentLimit;
+			
+			const offset: number = request.query?.offset as unknown as number;
+			const listId: number = request.params?.id as unknown as number;
+
+			const result = await this.contentService.getSharedListContent(limit, offset, listId);
 			response.send(result);
 
 		} catch (err: any) {

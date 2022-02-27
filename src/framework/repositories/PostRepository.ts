@@ -13,7 +13,7 @@ export class PostRepository implements IPostRepository {
         
     }
 
-    getTopPosts = async (limit: number, offset: number, tag: string | undefined, subTag: string | undefined, userId:number): Promise<ViewPostsDto[]> => {
+    getTopPosts = async (limit: number, offset: number, tag: string | undefined, subTag: string | undefined, userId: number | null): Promise<ViewPostsDto[]> => {
 
         let posts: ViewPostsDto[] = [];
         const finalTag = (!tag || tag == '') ? null : tag;
@@ -68,6 +68,34 @@ export class PostRepository implements IPostRepository {
 
         return posts;
     }
+
+    getSharedListPosts = async (limit: number, offset: number, listId:number): Promise<ViewPostsDto[]> => {
+
+        let posts: ViewPostsDto[] = [];
+
+        const args: any[] = [limit, offset, listId];
+       
+        const result = await this.dbHelper.callFunction(Constants.fnGetSharedListContent, args);
+          
+        result.forEach((item: { [x: string]: any; }) => {
+            posts.push({
+                postId: item["gp_post_id"],
+                listId: item["gp_list_id"],
+                url: item["url"],
+                urlDescription: item["url_description"],
+                likes: item["like"],
+                userName: item["user_name"],
+                date: item["utc_date"],
+                listName: item["list_name"],
+                userId: item["gp_user_id"],
+                isFollowing: item["is_following"],
+                imageUrl: item["image_url"]
+            })
+        });
+
+        return posts;
+    }
+
 
     getPosts = async (listId:number): Promise<Post[]> => {
 

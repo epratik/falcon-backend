@@ -13,7 +13,7 @@ export class ContentService implements IContentService{
         
     }
 
-    getTopContent = async (limit: number, offset: number, tag: string | undefined, subTag:string|undefined, userId: number): Promise<ContentDto> => {
+    getTopContent = async (limit: number, offset: number, tag: string | undefined, subTag:string|undefined, userId: number|null): Promise<ContentDto> => {
         let topContent: ContentDto | undefined = undefined;
         //top content is not an actual tag name, if its top content we get all top posts.
         if (tag === 'top-content')
@@ -91,4 +91,43 @@ export class ContentService implements IContentService{
         
         return followedContent;
     }
+
+    getSharedListContent = async (limit: number, offset: number, listId: number): Promise<ContentDto> => {
+        let sharedListContent: ContentDto | undefined = undefined;
+        
+        const posts = await this.postRepo.getSharedListPosts(limit, offset, listId);
+        await Promise.all(posts.map(async (item) => {
+            const preview = await this.getLinkPreviewUseCase.execute(item.url);
+            
+            if (sharedListContent && sharedListContent.content) {
+                sharedListContent.content.push({
+                    post: item,
+                    preview: {
+                        title: undefined,
+                        siteName: undefined,
+                        images: item.imageUrl ? [item.imageUrl] : undefined
+                    }
+                })
+            } else {
+                sharedListContent = {
+                    content: [
+                        {
+                            post: item,
+                            preview: {
+                                title: undefined,
+                                siteName: undefined,
+                                images: item.imageUrl ? [item.imageUrl] : undefined
+                            }
+                        }
+                    ]
+                }
+            }
+        }));
+
+        if (!sharedListContent)
+            sharedListContent = { content: [] };
+        
+        return sharedListContent;
+    }
+
 }
