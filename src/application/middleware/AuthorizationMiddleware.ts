@@ -23,7 +23,7 @@ export class AuthorizationMiddleware {
 	authorize = async (request: express.Request, response: express.Response, next: express.NextFunction) => {
 		let isAuthorized: boolean = false;
 
-		if (request.path === "/api" || request.path.toLocaleLowerCase().includes("sharedposts") || (request.query && request.query.tag == "top-content"))
+		if (request.path === "/api" || request.path.toLowerCase().includes("sharedposts") || request.path.toLowerCase().includes("top-posts"))
 			isAuthorized = true;
 		//for health check of the endpoint
 		else if (request.headers.authorization) {
