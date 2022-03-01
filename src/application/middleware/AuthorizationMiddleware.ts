@@ -1,6 +1,7 @@
 // import { Context, UnauthorizedError, ForbiddenError } from "@zode/zode";
 import express from "express";
 import { inject, injectable } from "tsyringe";
+import UrlPattern from "url-pattern";
 import { IUserContext } from "../../core/interfaces/common/IUserContext";
 // import { ErrorHandler } from "../../core/common/ErrorHandler";
 import { ILogger } from "../../core/interfaces/framework/ILogger";
@@ -23,8 +24,8 @@ export class AuthorizationMiddleware {
 	authorize = async (request: express.Request, response: express.Response, next: express.NextFunction) => {
 		let isAuthorized: boolean = false;
 
-		if (request.path === "/api" || request.path.toLowerCase().includes("sharedposts")
-			|| (request.path.toLowerCase() === "/api/lists" && request.method.toLowerCase() == "get")
+		if (request.path === "/api" ||  (new UrlPattern('/api/lists(/*)sharedposts').match(request.path.toLowerCase()))
+			|| (new UrlPattern('/api/lists(/*)posts').match(request.path.toLowerCase()))
 		)
 			isAuthorized = true;
 		//for health check of the endpoint
