@@ -11,8 +11,6 @@ export class ListRouter implements IRouter  {
     }
 
     initializeRoutes(){
-        this.router.get('/lists/:id/posts', (req, res) => container.resolve(PostController).getPostsForAList(req, res));
-        this.router.get('/lists/:id/sharedposts', (req, res) => container.resolve(PostController).getPostsForASharedList(req, res));
         this.router.get('/lists', (req, res) => container.resolve(ListController).get(req, res));
         this.router.post('/lists', (req, res) => container.resolve(ListController).post(req, res));
         this.router.patch('/lists', (req, res) => container.resolve(ListController).patch(req, res));

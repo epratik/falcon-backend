@@ -18,20 +18,6 @@ export class CreatePostUseCase implements ICreatePostUseCase {
     ) { }
 
     execute = async (postDto: CreatePostDto): Promise<void> => {
-        
-        const preview = await this.linkPreview.execute(postDto.url);
-
-        // if (await this.configManager.enableAWSRekognition) {
-        //     if (preview.images && preview.images.length > 0) {
-        //         const buffer = await this.httpClient.getImageBuffer({ url: preview.images[0] });
-        //         if (await this.awsHelper.checkExplicitContent(buffer))
-        //             throw new Error('Explicit content detected');
-        //     }
-        // }
-        
-        if (preview.images && preview.images.length > 0)
-            postDto.imageUrl = preview.images[0];
-
         await this.postRepo.createPost(postDto);
     }
 }
