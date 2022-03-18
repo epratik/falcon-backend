@@ -1,5 +1,5 @@
-import { CreateListDto } from "../../dto/CreateListDto";
+import { List } from "../../model/List";
 
 export interface ICreateListUseCase{
-    execute (listDto: CreateListDto, userId: number): Promise<number>
+    execute (list: List): Promise<void>
 }
