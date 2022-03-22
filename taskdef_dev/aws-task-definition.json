@@ -17,28 +17,7 @@
       "command": null,
       "linuxParameters": null,
       "cpu": 0,
-      "environment": [
-        {
-          "name": "AWS_REGION",
-          "value": "us-west-2"
-        },
-        {
-          "name": "HTTP_PORT",
-          "value": "8080"
-        },
-        {
-          "name": "LOG_LEVEL",
-          "value": "info"
-        },
-        {
-          "name": "NODE_ENV",
-          "value": "local"
-        },
-        {
-          "name": "REQUEST_PER_MINUTE",
-          "value": "15"
-        }
-      ],
+      "environment": [],
       "resourceRequirements": null,
       "ulimits": null,
       "dnsServers": null,
@@ -50,17 +29,16 @@
       "memoryReservation": 500,
       "volumesFrom": [],
       "stopTimeout": null,
-      "image": "public.ecr.aws/o6c6k1c5/gp-dev-ecr-public:latest",
+      "image": "075760899250.dkr.ecr.us-west-2.amazonaws.com/mfp-dev-ecr-falconbackend:latest",
       "startTimeout": null,
       "firelensConfiguration": null,
       "dependsOn": null,
       "disableNetworking": null,
       "interactive": null,
       "healthCheck": {
-        "retries": 3,
+        "retries": 5,
         "command": [
-          "CMD-SHELL",
-          "curl -f http://127.0.0.1:8080/api || exit 1"
+          "CMD-SHELL curl -f http://127.0.0.1:8080/api || exit 1"
         ],
         "timeout": 5,
         "interval": 5,
@@ -76,7 +54,7 @@
       "dockerLabels": null,
       "systemControls": null,
       "privileged": null,
-      "name": "gp-dev-ecs-container"
+      "name": "mfp-dev-falconservice"
     }
   ],
   "placementConstraints": [],
@@ -86,14 +64,20 @@
     "EXTERNAL",
     "EC2"
   ],
-  "taskDefinitionArn": "arn:aws:ecs:us-west-2:075760899250:task-definition/gp-dev-ecs-taskdefinition:13",
-  "family": "gp-dev-ecs-taskdefinition",
+  "taskDefinitionArn": "arn:aws:ecs:us-west-2:075760899250:task-definition/mfp-dev-ecs-taskdefinition:1",
+  "family": "mfp-dev-ecs-taskdefinition",
   "requiresAttributes": [
     {
       "targetId": null,
       "targetType": null,
       "value": null,
       "name": "com.amazonaws.ecs.capability.docker-remote-api.1.24"
+    },
+    {
+      "targetId": null,
+      "targetType": null,
+      "value": null,
+      "name": "com.amazonaws.ecs.capability.ecr-auth"
     },
     {
       "targetId": null,
@@ -115,7 +99,7 @@
   "networkMode": null,
   "runtimePlatform": null,
   "cpu": null,
-  "revision": 13,
+  "revision": 1,
   "status": "ACTIVE",
   "inferenceAccelerators": null,
   "proxyConfiguration": null,
