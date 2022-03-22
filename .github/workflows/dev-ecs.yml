@@ -33,7 +33,7 @@ on:
 
 env:
   AWS_REGION: us-west-2                           # set this to your preferred AWS region, e.g. us-west-1
-  ECR_REPOSITORY: 075760899250.dkr.ecr.us-west-2.amazonaws.com/mfp-dev-ecr-falconbackend # set this to your Amazon ECR repository name
+  ECR_REPOSITORY: ${{ secrets.AWS_ECR_URI }} # set this to your Amazon ECR repository name
   ECS_SERVICE: mfp-dev-ecs-service                # set this to your Amazon ECS service name
   ECS_CLUSTER: mfp-dev-ecs-cluster                # set this to your Amazon ECS cluster name
   ECS_TASK_DEFINITION: mfp-dev-ecs-taskdefinition # set this to the path to your Amazon ECS task definition
