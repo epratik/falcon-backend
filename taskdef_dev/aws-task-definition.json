@@ -17,7 +17,24 @@
       "command": null,
       "linuxParameters": null,
       "cpu": 0,
-      "environment": [],
+      "environment": [
+        {
+          "name": "AWS_REGION",
+          "value": "us-west-2"
+        },
+        {
+          "name": "HTTP_PORT",
+          "value": "8080"
+        },
+        {
+          "name": "LOG_LEVEL",
+          "value": "info"
+        },
+        {
+          "name": "NODE_ENV",
+          "value": "dev"
+        }
+      ],
       "resourceRequirements": null,
       "ulimits": null,
       "dnsServers": null,
@@ -29,7 +46,7 @@
       "memoryReservation": 500,
       "volumesFrom": [],
       "stopTimeout": null,
-      "image": "075760899250.dkr.ecr.us-west-2.amazonaws.com/mfp-dev-ecr-falconbackend:latest",
+      "image": "075760899250.dkr.ecr.us-west-2.amazonaws.com/mfp-dev-ecr-falconbackend:daf2f152a1ffa356a4c211e42bc649705c38ae87",
       "startTimeout": null,
       "firelensConfiguration": null,
       "dependsOn": null,
@@ -64,7 +81,7 @@
     "EXTERNAL",
     "EC2"
   ],
-  "taskDefinitionArn": "arn:aws:ecs:us-west-2:075760899250:task-definition/mfp-dev-ecs-taskdefinition:1",
+  "taskDefinitionArn": "arn:aws:ecs:us-west-2:075760899250:task-definition/mfp-dev-ecs-taskdefinition:3",
   "family": "mfp-dev-ecs-taskdefinition",
   "requiresAttributes": [
     {
@@ -99,7 +116,7 @@
   "networkMode": null,
   "runtimePlatform": null,
   "cpu": null,
-  "revision": 1,
+  "revision": 3,
   "status": "ACTIVE",
   "inferenceAccelerators": null,
   "proxyConfiguration": null,
