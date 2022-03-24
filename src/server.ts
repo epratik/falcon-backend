@@ -53,28 +53,17 @@ const server: http.Server = http.createServer(app);
 const routes: Array<IRouter> = [];
 //modify response
 
-// Create the rate limit rule
-const apiRequestLimiter = rateLimit({
-    windowMs: 1 * 60 * 1000, // 1 minute
-    max: Number(process.env.REQUEST_PER_MINUTE) // limit each IP to 15 requests per windowMs
-})
-
 //Setup and initialize all routes
 routes.push(new ListRouter(router));
 
 app.use(express.json());
 app.use(corsMiddleware.setCors);
-app.use(apiRequestLimiter);
 app.use("/" + Constants.apiPrefix, router);
 routes.forEach((router: IRouter) => {
 	router.initializeRoutes();
 });
 
 router.get("/", function (req, res) {
-	res.sendStatus(200);
-});
-//Test ecs deployment
-router.get("/ecs", function (req, res) {
 	res.sendStatus(200);
 });
 
