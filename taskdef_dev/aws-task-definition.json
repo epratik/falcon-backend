@@ -46,7 +46,7 @@
       "memoryReservation": 500,
       "volumesFrom": [],
       "stopTimeout": null,
-      "image": "075760899250.dkr.ecr.us-west-2.amazonaws.com/mfp-dev-ecr-falconbackend:daf2f152a1ffa356a4c211e42bc649705c38ae87",
+      "image": "075760899250.dkr.ecr.us-west-2.amazonaws.com/mfp-dev-ecr-falconbackend:e3eb83182e81eae8e89347732c5e10c5562eb7ae",
       "startTimeout": null,
       "firelensConfiguration": null,
       "dependsOn": null,
@@ -55,7 +55,8 @@
       "healthCheck": {
         "retries": 5,
         "command": [
-          "CMD-SHELL curl -f http://127.0.0.1:8080/api || exit 1"
+          "CMD-SHELL",
+          "curl -f http://127.0.0.1:8080/api || exit 1"
         ],
         "timeout": 5,
         "interval": 5,
@@ -81,7 +82,7 @@
     "EXTERNAL",
     "EC2"
   ],
-  "taskDefinitionArn": "arn:aws:ecs:us-west-2:075760899250:task-definition/mfp-dev-ecs-taskdefinition:3",
+  "taskDefinitionArn": "arn:aws:ecs:us-west-2:075760899250:task-definition/mfp-dev-ecs-taskdefinition:6",
   "family": "mfp-dev-ecs-taskdefinition",
   "requiresAttributes": [
     {
@@ -116,7 +117,7 @@
   "networkMode": null,
   "runtimePlatform": null,
   "cpu": null,
-  "revision": 3,
+  "revision": 6,
   "status": "ACTIVE",
   "inferenceAccelerators": null,
   "proxyConfiguration": null,
