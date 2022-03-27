@@ -26,7 +26,7 @@ export class ListController {
     post = async (request: express.Request, response: express.Response): Promise<any> => {
         try {
             await this.createListUseCase.execute(request.body as List);
-            response.status(201);
+            response.send(200);
         } catch (err: any) {
             this.logger.logError(err);
             response.send(500);
